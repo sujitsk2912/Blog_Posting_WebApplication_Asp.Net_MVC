@@ -1,0 +1,80 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAccounts.cshtml";
+}
+
+<div class="container mt-5">
+    <!-- Login Form -->
+    <div class="form-container">
+        <h2 class="text-center mb-4">Login</h2>
+
+        <form id="loginForm" class="row g-3">
+            <!-- Email or Phone -->
+            <div class="col-md-12">
+                <label for="emailorphone" class="form-label">Email or Phone</label>
+                <input type="text" id="emailorphone" name="emailorphone" class="form-control" placeholder="Email or Phone" required />
+            </div>
+
+            <!-- Password -->
+            <div class="col-md-12">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </div>
+
+            <p class="mt-3 text-center">Don't have an account? <a href="@Url.Action("Register", "Account")">Register here</a></p>
+        </form>
+
+        <!-- Error Message Container -->
+        <div id="alertMessage" class="mt-3"></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        // Clear error message when any input field is clicked
+        $("#loginForm input").on("click", function () {
+            $("#alertMessage").html(""); // Clear the alert message
+        });
+
+
+        // Handle Form Submission
+        $("#loginForm").submit(function (e) {
+            e.preventDefault(); // Prevent default form submission
+
+            // Collect form data
+            var formData = {
+                emailorphone: $("#emailorphone").val(),
+                password: $("#password").val()
+            };
+
+            // AJAX Request to Login Action
+            $.ajax({
+                url: '@Url.Action("Login", "Account")',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        // Handle Successful Login
+                        $("#alertMessage").html('<div class="alert alert-success">Login successful! Redirecting...</div>');
+                        setTimeout(function () {
+                            window.location.href = '@Url.Action("Index", "Home")';
+                        }, 2000);
+                    }
+                    else {
+                        $("#alertMessage").html('<div class="alert alert-danger">Incorrect Username or Password, Try Again!</div>');
+                    }
+                },
+                error: function (xhr) {
+                    // Handle Error Response
+                    let errorMessage = xhr.responseText || 'Login failed. Please try again.';
+                    $("#alertMessage").html('<div class="alert alert-danger">' + errorMessage + '</div>');
+                }
+            });
+        });
+    });
+</script>
