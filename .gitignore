@@ -1,2 +1,20 @@
+# Ignore the images folder
 Assets/Images/
 PostAssets/images/
+
+
+# Ignore node_modules (for Node.js projects)
+/node_modules/
+
+# Ignore build files
+/build/
+/dist/
+
+# Ignore environment files
+.env
+.env.local
+Web.config
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
