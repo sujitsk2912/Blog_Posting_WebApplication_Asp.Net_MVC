@@ -49,6 +49,8 @@ namespace Blog_Posting_WebApplication.Controllers
 
             ViewBag.UserId = userId;
             // ✅ Get posts and return the view
+
+
             return View(GetPosts());
         }
 
@@ -166,5 +168,50 @@ namespace Blog_Posting_WebApplication.Controllers
 
             return (firstName, lastName);
         }
+
+
+        [HttpGet]
+        public JsonResult GetCommentsCountOnPost(int postID)
+        {
+            try
+            {
+                // Ensure user is authenticated and get UserID from the session
+                if (Session["UserID"] == null)
+                {
+                    return Json(new { success = false, message = "Unauthorized access. Please log in." }, JsonRequestBehavior.AllowGet);
+                }
+
+                int userID = Convert.ToInt32(Session["UserID"]);
+
+                // Validate input parameters
+                if (postID <= 0)
+                {
+                    return Json(new { success = false, message = "Invalid post ID." }, JsonRequestBehavior.AllowGet);
+                }
+
+                int totalComments = 0;
+
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) AS TotalComments FROM PostComments WHERE PostID = @PostID", conn))
+                {
+                    cmd.Parameters.AddWithValue("@PostID", postID);
+
+                    // ExecuteScalar returns a single value (TotalComments)
+                    totalComments = (int)cmd.ExecuteScalar();
+                }
+
+                return Json(new { success = true, totalComments = totalComments }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
     }
 }

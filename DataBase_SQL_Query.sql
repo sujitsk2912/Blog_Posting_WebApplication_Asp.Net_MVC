@@ -2,10 +2,6 @@ create database BLOG_POSTER_DB
 
 -------- CREATE UserDetails TABLE FOR REGISTERED USERS ------------------
 
-DROP TABLE UserDetails
-
-truncate TABLE UserDetails
-
 CREATE TABLE UserDetails
 (
 UserID INT PRIMARY KEY IDENTITY(100,1) NOT NULL,
@@ -15,6 +11,7 @@ DateOfBirth DATETIME NOT NULL,
 Gender VARCHAR(20) NOT NULL,
 Mobile NVARCHAR(20) NULL UNIQUE,
 Email NVARCHAR(50) NULL UNIQUE,
+UserImage NVARCHAR(MAX) NULL,
 CreatedAt DATETIME NOT NULL,
 IsActive BIT NOT NULL
 );
@@ -23,8 +20,6 @@ IsActive BIT NOT NULL
 
 
 --- CREATE UserLoggedInData FOR PASSWORDS OF USERS --------------------
-
-truncate TABLE UserLoggedInData
 
 CREATE TABLE UserLoggedInData
 (
@@ -41,7 +36,6 @@ CREATE TABLE UserLoggedInData
 
 SELECT * FROM UserDetails
 SELECT * FROM UserLoggedInData
-
 
 
 ---------------------------------------------------------------------
@@ -121,29 +115,28 @@ END;
 
 ----------------------------------------------------------------
 
+
 CREATE TABLE UploadPost
 (
-PostID INT PRIMARY KEY IDENTITY(3000,1) NOT NULL ,
-UserID INT NOT NULL,
-PostedOn DATETIME NOT NULL,
-CommentsID INT NULL,
-LikesID INT NULL,
-	CONSTRAINT FK_UserDetails_Users FOREIGN KEY (UserID)
-	REFERENCES UserDetails(UserID)
+    PostID INT PRIMARY KEY IDENTITY(3000,1) NOT NULL,
+    UserID INT NOT NULL,
+    PostedOn DATETIME NOT NULL,
+    CONSTRAINT FK_UserDetails_Users FOREIGN KEY (UserID)
+    REFERENCES UserDetails(UserID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
 --------------------------------------------------------------
+
 
 CREATE TABLE PostUploadContent
 (
     PostID INT PRIMARY KEY NOT NULL,
     UserID INT NOT NULL,
-    PostContent NVARCHAR(MAX) NOT NULL,
+    PostContent NVARCHAR(MAX) NULL,
 
-    -- Ensure PostID exists in PostUploadTB
+    -- Ensure PostID exists in UploadPost and cascade delete
     CONSTRAINT FK_PostContents FOREIGN KEY (PostID) 
-    REFERENCES UploadPost(PostID),
+    REFERENCES UploadPost(PostID) ON DELETE CASCADE,
 
     -- Ensure UserID exists in UserDetails
     CONSTRAINT FK_PostContent_Users FOREIGN KEY (UserID)
@@ -152,47 +145,298 @@ CREATE TABLE PostUploadContent
 
 --------------------------------------------------------------
 
-SELECT * FROM UploadPost
-SELECT * FROM PostUploadContent
-SELECT * FROM postImageContainer
-
--------------------------------------------------
-
-CREATE TRIGGER trg_EnsureUserMatch
-ON PostContent
-AFTER INSERT
-AS
-BEGIN
-    IF EXISTS (
-        SELECT 1
-        FROM inserted i
-        JOIN UploadPost p ON i.PostID = p.PostID
-        WHERE i.UserID <> p.UserID
-    )
-    BEGIN
-        RAISERROR('UserID mismatch between PostUpload and PostContent.', 16, 1);
-        ROLLBACK TRANSACTION;
-    END
-END;
-
-
-----------------------------------------------------------
-
 CREATE TABLE postImageContainer
 (
-	PostID INT PRIMARY KEY NOT NULL,
+    PostID INT PRIMARY KEY NOT NULL,
     UserID INT NOT NULL,
-	ImageID INT NOT NULL IDENTITY(1234, 1),
     imgURL NVARCHAR(MAX) NULL,
 
-	 -- Ensure PostID exists in PostUploadTB
+    -- Ensure PostID exists in UploadPost and cascade delete
     CONSTRAINT FK_ImgContents FOREIGN KEY (PostID) 
-    REFERENCES UploadPost(PostID),
+    REFERENCES UploadPost(PostID) ON DELETE CASCADE,
 
     -- Ensure UserID exists in UserDetails
     CONSTRAINT FK_ImgContent_Users FOREIGN KEY (UserID)
     REFERENCES UserDetails(UserID)
-)
+);
+
+---------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE usp_InsertPostData
+    @UserID INT,
+    @PostedOn DATETIME,
+    @PostContent NVARCHAR(MAX) = NULL,
+    @imgURL NVARCHAR(MAX) = NULL
+AS
+BEGIN
+    -- Declare a variable to store the newly generated PostID
+    DECLARE @NewPostID INT;
+
+    -- Start a transaction to ensure atomicity
+    BEGIN TRANSACTION;
+
+    -- Insert into UploadPost table
+    INSERT INTO UploadPost (UserID, PostedOn)
+    VALUES (@UserID, @PostedOn);
+
+    -- Get the newly generated PostID
+    SET @NewPostID = SCOPE_IDENTITY();
+
+    -- Insert into PostUploadContent table
+    INSERT INTO PostUploadContent (PostID, UserID, PostContent)
+    VALUES (@NewPostID, @UserID, @PostContent);
+
+    -- Insert into postImageContainer table
+    INSERT INTO postImageContainer (PostID, UserID, imgURL)
+    VALUES (@NewPostID, @UserID, @imgURL);
+
+    -- Commit the transaction
+    COMMIT TRANSACTION;
+END;
 
 
------------------------------------------------------------
+---------------------------------------------------------------------
+
+SELECT * FROM UploadPost
+SELECT * FROM PostUploadContent
+SELECT * FROM postImageContainer
+
+----------------------------------------------
+
+CREATE OR ALTER PROCEDURE usp_GetPosts
+AS
+BEGIN
+    SELECT 
+        UD.FirstName,
+        UD.LastName,
+        UD.UserImage,
+        UP.PostID,
+        UP.UserID,
+        UP.PostedOn,
+        PUC.PostContent,
+        PIC.imgURL
+    FROM 
+        UploadPost UP
+    LEFT JOIN 
+        UserDetails UD ON UD.UserID = UP.UserID
+    LEFT JOIN 
+        PostUploadContent PUC ON UP.PostID = PUC.PostID
+    LEFT JOIN 
+        postImageContainer PIC ON UP.PostID = PIC.PostID
+    ORDER BY 
+        UP.PostedOn DESC; -- Order by most recent posts first
+END;
+
+
+-----------------------------------------------------------------------
+
+CREATE PROCEDURE usp_DeletePost
+@UserID INT,
+@PostID INT
+AS
+BEGIN
+	DELETE UploadPost
+	WHERE UserID = @UserID AND PostID = @PostID
+END;
+
+-----------------------------------------------------------------
+CREATE TABLE PostComments
+(
+    CommentID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    PostID INT NOT NULL,
+    UserID INT NOT NULL,
+    CommentText NVARCHAR(MAX) NOT NULL,
+    CommentedOn DATETIME NOT NULL DEFAULT GETDATE(),
+    
+    -- Foreign key constraints without cascade
+    CONSTRAINT FK_PostComments_UploadPost FOREIGN KEY (PostID)
+        REFERENCES UploadPost(PostID) ON DELETE CASCADE ON UPDATE CASCADE,
+
+    CONSTRAINT FK_PostComments_UserDetails FOREIGN KEY (UserID)
+        REFERENCES UserDetails(UserID) ON DELETE NO ACTION ON UPDATE NO ACTION
+);
+
+---------------------------------------
+
+-- DELETE COMMENTS WHEN USER IS DELETED ---------
+
+CREATE OR ALTER TRIGGER trg_DeleteUserComments
+ON UserDetails
+AFTER DELETE
+AS
+BEGIN
+    DELETE FROM PostComments
+    WHERE UserID IN (SELECT UserID FROM deleted);
+END;
+
+
+-------------------------------------------------
+----     -- Update UserID in PostComments when UserID is updated in UserDetails ------------
+
+CREATE OR ALTER TRIGGER trg_UpdateUserComments
+ON UserDetails
+AFTER UPDATE
+AS
+BEGIN
+    UPDATE pc
+    SET pc.UserID = i.UserID
+    FROM PostComments pc
+    INNER JOIN deleted d ON pc.UserID = d.UserID
+    INNER JOIN inserted i ON d.UserID = i.UserID;
+END;
+
+
+-------------------------------------------------------
+CREATE OR ALTER PROCEDURE usp_PostComments
+    @PostID INT,                -- Input: PostID
+    @UserID INT,                -- Input: UserID
+    @CommentText NVARCHAR(MAX)  -- Input: Comment Text
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Validate if PostID and UserID exist
+    IF NOT EXISTS (SELECT 1 FROM UploadPost WHERE PostID = @PostID)
+    BEGIN
+        RETURN 0; -- Post does not exist
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM UserDetails WHERE UserID = @UserID)
+    BEGIN
+        RETURN 0; -- User does not exist
+    END
+
+    -- Insert comment into PostComments table
+    INSERT INTO PostComments (PostID, UserID, CommentText)
+    VALUES (@PostID, @UserID, @CommentText);
+
+    RETURN 1; -- Success
+END;
+
+----------------------------------------------------------------------
+
+select * from PostComments
+
+-------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE usp_getCommentsByPost
+    @PostID INT,         -- Input parameter: PostID (required)
+    @UserID INT = NULL   -- Input parameter: UserID (optional)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Check if the post exists
+    IF NOT EXISTS (SELECT 1 FROM UploadPost WHERE PostID = @PostID)
+    BEGIN
+        RETURN 0; -- Post does not exist
+    END
+
+    -- Fetch comments for the given PostID and optionally filter by UserID
+    SELECT 
+        PC.CommentID,
+        PC.PostID,
+        PC.UserID,
+        PC.CommentText,
+        PC.CommentedOn,
+        UD.FirstName,
+        UD.LastName,
+        UD.UserImage
+    FROM 
+        PostComments PC
+    INNER JOIN 
+        UserDetails UD ON PC.UserID = UD.UserID
+    WHERE 
+        PC.PostID = @PostID
+    ORDER BY 
+        PC.CommentedOn DESC; -- Latest comments first
+
+    RETURN 1; -- Success
+END;
+
+
+---------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE usp_DeleteCommentOnPost
+    @UserID INT,       -- User who wants to delete the comment
+    @PostID INT,       -- Post from which the comment will be deleted
+    @CommentID INT     -- Specific comment to be deleted
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Check if the comment exists and belongs to the user for the given post
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM PostComments 
+        WHERE CommentID = @CommentID 
+          AND PostID = @PostID 
+          AND UserID = @UserID
+    )
+    BEGIN
+        PRINT 'Comment not found or unauthorized access';
+        RETURN 0; -- Failure: Comment not found or not authorized
+    END
+
+    -- Delete the comment
+    DELETE FROM PostComments
+    WHERE CommentID = @CommentID 
+      AND PostID = @PostID 
+      AND UserID = @UserID;
+
+    PRINT 'Comment deleted successfully';
+    RETURN 1; -- Success
+END;
+
+----------------------------------------------------------------------------
+
+CREATE TABLE PostLikes (
+    LikeID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL,
+    PostID INT NOT NULL,
+    LikedAt DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_PostLikes_User FOREIGN KEY (UserID) REFERENCES UserDetails(UserID),
+    CONSTRAINT FK_PostLikes_Post FOREIGN KEY (PostID) REFERENCES UploadPost(PostID),
+    UNIQUE (UserID, PostID) -- Prevent duplicate likes
+);
+
+--------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE usp_ToggleLikeOnPost
+    @UserID INT,      -- User who is liking or unliking the post
+    @PostID INT       -- Post to be liked or unliked
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Check if the like already exists
+    IF EXISTS (
+        SELECT 1 
+        FROM PostLikes 
+        WHERE UserID = @UserID 
+          AND PostID = @PostID
+    )
+    BEGIN
+        -- If like exists, remove it (Unlike the post)
+        DELETE FROM PostLikes 
+        WHERE UserID = @UserID 
+          AND PostID = @PostID;
+
+        PRINT 'Like removed successfully';
+    END
+    ELSE
+    BEGIN
+        -- If like doesn't exist, add it (Like the post)
+        INSERT INTO PostLikes (UserID, PostID, LikedAt)
+        VALUES (@UserID, @PostID, GETDATE());
+
+        PRINT 'Like added successfully';
+    END
+
+    -- Return the updated like count for the post
+    SELECT COUNT(*) AS TotalLikes 
+    FROM PostLikes 
+    WHERE PostID = @PostID;
+END;
+
+-------------------------------------------------------

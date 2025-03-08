@@ -62,6 +62,25 @@
 
 <main style="display:flex">
 
+    <aside class="col-3" style="height: 90vh; position: sticky; top: 0;">
+    <div class="container">
+    <!-- Post Form -->
+    <div class="card mb-4" style="height:90vh">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="\Assets\Images\user (12).png" style="height:4rem" class="rounded-circle me-3" alt="User Avatar">
+                        <textarea class="form-control" rows="3" placeholder="What's on your mind?"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary">Post</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </aside>
+
     <div class="container mt-4 col-6">
         <div>
             @if (ViewBag.FirstName != null)
@@ -71,6 +90,8 @@
                 </div>
             }
         </div>
+
+
 
         @*post container*@
 
@@ -127,6 +148,26 @@
         </div>
 
     </div>
+
+    <aside class="col-3" style="height: 90vh; position: sticky; top: 0;">
+        <div class="container">
+            <!-- Post Form -->
+            <div class="card mb-4" style="height:90vh">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <img src="\Assets\Images\user (12).png" style="height:4rem" class="rounded-circle me-3" alt="User Avatar">
+                        <textarea class="form-control" rows="3" placeholder="What's on your mind?"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-primary">Post</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </aside>
+
 
 </main>
 
@@ -203,6 +244,8 @@
 
 
                     ${post.imgURL ? `<img id="getPostImage" src="/PostAssets/images/${post.imgURL}" class="img-fluid rounded mb-3" alt="Blog Image">` : ''}
+                    
+                    <hr />
 
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-heart pe-1"></i>Like</button>

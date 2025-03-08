@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Data;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
@@ -287,7 +288,6 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
             }
         }
 
-
-
+       
     }
 }
