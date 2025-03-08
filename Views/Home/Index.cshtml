@@ -270,7 +270,7 @@
                                 <div class="container d-flex align-items-center">
                                     <img src="/Assets/Images/user (13).png" style="height: 2rem; width: auto;" class="rounded-circle me-3" alt="User Avatar">
                                     <textarea id="postCommentBox${post.PostID}" class="form-control container postCommentBox" name="comment" rows="2" placeholder="Add a comment" style="background:transparent;color:#fff; border:none;outline:none"></textarea>
-                                    <button type="button" id="submitComment${post.PostID}" class="btn btn-primary ms-2 submitCommentBtn" style="border-radius:20px" disabled>Post</button>
+                                    <button type="button" id="submitComment${post.PostID}" class="btn btn-primary ms-2 submitCommentBtn" style="border-radius:20px">Post</button>
                                 </div>
                             </div>
                         </div>
@@ -923,22 +923,7 @@ $(document).ready(function () {
 @* end post comment actions for comments*@
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Get references to the textarea and button using class names
-        const textarea = document.getElementsByClassName('postCommentBox')[0]; // First element with this class
-        const postButton = document.getElementsByClassName('submitCommentBtn')[0]; // First element with this class
-
-        // Check if the elements exist
-        if (textarea && postButton) {
-            // Add an event listener to the textarea to detect input changes
-            textarea.addEventListener('input', function () {
-                // Enable the button if the textarea is not empty, otherwise disable it
-                postButton.disabled = textarea.value.trim() === "";
-            });
-        } else {
-            console.error('Textarea or button not found!');
-        }
-    });
+   
 </script>
 
 
