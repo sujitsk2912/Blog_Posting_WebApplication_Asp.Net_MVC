@@ -129,33 +129,42 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
 
 
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public JsonResult AddCommentOnPost(int userId, int postId, string PostComment)
         {
             try
             {
+                // Validate input parameters
+                if (userId <= 0 || postId <= 0 || string.IsNullOrWhiteSpace(PostComment))
+                {
+                    return Json(new { success = false, message = "Invalid input parameters." });
+                }
+
                 // Ensure the connection is opened
+
                 conn.Open();
 
-                SqlCommand cmdPostComment = new SqlCommand("usp_PostComments", conn);
-
-                cmdPostComment.CommandType = CommandType.StoredProcedure;
-
-                // Add parameters
-                cmdPostComment.Parameters.AddWithValue("@UserID", userId);
-                cmdPostComment.Parameters.AddWithValue("@PostID", postId);
-                cmdPostComment.Parameters.AddWithValue("@CommentText", PostComment);
-
-                // Execute the stored procedure
-                int rowsAffected = cmdPostComment.ExecuteNonQuery();
-
-                // Check if the comment was inserted successfully
-                if (rowsAffected > 0)
+                using (SqlCommand cmdPostComment = new SqlCommand("usp_PostComments", conn))
                 {
-                    return Json(new { success = true, message = "Commented on post successfully." });
-                }
-                else
-                {
-                    return Json(new { success = false, message = "Failed to add comment. Post or user may not exist." });
+                    cmdPostComment.CommandType = CommandType.StoredProcedure;
+
+                    // Add parameters
+                    cmdPostComment.Parameters.AddWithValue("@UserID", userId);
+                    cmdPostComment.Parameters.AddWithValue("@PostID", postId);
+                    cmdPostComment.Parameters.AddWithValue("@CommentText", PostComment);
+
+                    // Execute the stored procedure
+                    int rowsAffected = cmdPostComment.ExecuteNonQuery();
+
+                    // Check if the comment was inserted successfully
+                    if (rowsAffected > 0)
+                    {
+                        return Json(new { success = true, message = "Commented on post successfully." });
+                    }
+                    else
+                    {
+                        return Json(new { success = false, message = "Failed to add comment. Post or user may not exist." });
+                    }
                 }
             }
             catch (Exception ex)
@@ -169,5 +178,60 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
                 conn.Close();
             }
         }
+
+        [HttpGet]
+        public JsonResult GetCommentOnPost(int userId, int postId)
+        {
+            try
+            {
+                if (userId <= 0 || postId <= 0)
+                {
+                    return Json(new { success = false, message = "Invalid input parameters." }, JsonRequestBehavior.AllowGet);
+                }
+
+                List<object> commentsList = new List<object>();
+
+                
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("usp_GetCommentsByPost", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        cmd.Parameters.AddWithValue("@PostID", postId);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                commentsList.Add(new
+                                {
+                                    CommentID = reader["CommentID"],
+                                    UserID = reader["UserID"],
+                                    PostID = reader["PostID"],
+                                    CommentText = reader["CommentText"],
+                                    CommentedOn = Convert.ToDateTime(reader["CommentedOn"]).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    FirstName = reader["FirstName"],
+                                    LastName = reader["LastName"],
+                                    UserImage = reader["UserImage"]
+                                });
+                            }
+                        }
+                    }
+                
+
+                return Json(new { success = true, comments = commentsList }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
     }
 }

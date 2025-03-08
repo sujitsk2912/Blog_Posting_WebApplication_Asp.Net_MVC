@@ -44,9 +44,9 @@
         -ms-overflow-style: none;
     }
 
-    .container #postCommentBox::placeholder {
-        color: gray !important;
-    }
+        .container #postCommentBox::placeholder {
+            color: gray !important;
+        }
 
     .modal-body {
         scroll-behavior: smooth;
@@ -195,7 +195,7 @@
 
 
     ${post.imgURL ? `<img id="getPostImage" src="/PostAssets/images/${post.imgURL}" class="img-fluid rounded mb-3" alt="Blog Image">` : ''}
-    
+
     <div class="d-flex justify-content-between">
         <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-heart pe-1"></i>Like</button>
         <button data-bs-toggle="modal" data-bs-target="#commentModal${post.PostID || ''}" class="btn btn-outline-secondary btn-sm">
@@ -212,7 +212,11 @@
 
                 <!-- Comment Modal -->
 
-             <div class="modal fade" id="commentModal${post.PostID}" data-post-id="${post.PostID}" data-post-user-id="${post.UserID}" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
+               <form id="commentForm" enctype="multipart/form-data">
+                @Html.AntiForgeryToken() <!-- Add this line -->
+
+             <div class="modal fade" onclick="loadCommentsInModal(${post.UserID}, ${post.PostID})"
+id="commentModal${post.PostID}" data-post-id="${post.PostID}" data-post-user-id="${post.UserID}" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" style="width: 80%">
                     <div class="modal-content" style="display: flex; flex-direction: row; height: 90vh; width: 100%; background: #000; color:#fff">
                         <div class="col-6 d-flex justify-content-center align-items-center">
@@ -237,7 +241,7 @@
                                     </div>
                                 ` : ''}
 
-                                <div class="" id="commentsContainer${post.PostID}">
+                              <div class="" id="commentsContainer${post.PostID}">
                                     ${post.Comments ? generateComments(post.Comments) : '<p>No comments available.</p>'}
                                 </div>
                             </div>
@@ -245,7 +249,7 @@
                             <div class="modal-footer col-6" style="display: flex; position: absolute; bottom: 0; justify-content: center;">
                                 <div class="container d-flex align-items-center">
                                     <img src="/Assets/Images/user (13).png" style="height: 2rem; width: auto;" class="rounded-circle me-3" alt="User Avatar">
-                                    <textarea id="postCommentBox{post.PostID}" class="form-control container" name="comment" rows="2" placeholder="Add a comment" style="background:transparent;color:#fff;"></textarea>
+                                    <textarea id="postCommentBox${post.PostID}" class="form-control container" name="comment" rows="2" placeholder="Add a comment" style="background:transparent;color:#fff;"></textarea>
                                     <button type="button" id="submitComment${post.PostID}" class="btn btn-primary ms-2" style="border-radius:20px">Post</button>
                                 </div>
                             </div>
@@ -253,28 +257,14 @@
                     </div>
                 </div>
             </div>
+            </form>
             </div>
         </div>`;
                 container.append(postHTML);
             });
         }
 
-        // Function to format "time ago"
-        function formatTimeAgo(postedOn) {
-            if (!postedOn) return "Unknown time";
 
-            const postDate = new Date(postedOn);
-            if (isNaN(postDate)) return "Invalid date"; // Handle invalid dates
-
-            const now = new Date();
-            const diff = Math.floor((now - postDate) / 1000); // Difference in seconds
-
-            if (diff < 60) return `${diff} seconds ago`;
-            if (diff < 3600) return `${Math.floor(diff / 60)} minutes ago`;
-            if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`;
-            if (diff < 172800) return `Yesterday`;
-            return `${Math.floor(diff / 86400)} days ago`;
-        }
 
 
         // Function to generate comment HTML
@@ -299,6 +289,30 @@
         }
     });
 </script>
+
+@*Function to format "time ago"*@
+
+
+<script>
+    // Function to format "time ago"
+    function formatTimeAgo(postedOn) {
+        if (!postedOn) return "Unknown time";
+
+        const postDate = new Date(postedOn);
+        if (isNaN(postDate)) return "Invalid date"; // Handle invalid dates
+
+        const now = new Date();
+        const diff = Math.floor((now - postDate) / 1000); // Difference in seconds
+
+        if (diff < 60) return `${diff} seconds ago`;
+        if (diff < 3600) return `${Math.floor(diff / 60)} minutes ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)} hours ago`;
+        if (diff < 172800) return `Yesterday`;
+        return `${Math.floor(diff / 86400)} days ago`;
+    }
+</script>
+
+@*end Function to format "time ago"*@
 
 @*end Scrript for Getting all posts*@
 
@@ -543,7 +557,166 @@ $(document).ready(function () {
 
 @*end Script for adjusting post content box*@
 
+
+@*Script for Uploading Comments on a Particular Post*@
+
+
 <script>
 
+    // @*Script for Uploading Comments on a Particular Post*@
+    $(document).on('click', '[id^="submitComment"]', function () {
+        const postId = $(this).attr('id').replace('submitComment', '');
+        const commentBox = $(`#postCommentBox${postId}`);
+        const commentContent = commentBox.val().trim();
+
+        if (!commentContent) {
+            showToast('Comment cannot be empty.', 'warning');
+            return;
+        }
+
+        const postUserId = $(`#commentModal${postId}`).data('post-user-id');
+
+        //console.log(postUserId, postId, commentContent);
+
+
+        if (!postUserId) {
+            showToast('Error: User information is missing.', 'error');
+            return;
+        }
+
+        //const token = $('input[name="__RequestVerificationToken"]').val();
+
+        $.ajax({
+            url: '/UploadPost/AddCommentOnPost',
+            type: 'POST',
+            //headers: {
+            //    'RequestVerificationToken': token
+            //},
+            data: {
+                userId: postUserId,
+                postId: postId,
+                PostComment: commentContent // Ensure this matches the controller parameter name
+            },
+            success: function (response) {
+                if (response.success) {
+                    showToast('Comment posted successfully!', 'success');
+                    commentBox.val('');
+
+                    // Call loadCommentsInModal to refresh comments
+                    loadCommentsInModal(postUserId, postId);
+                } else {
+                    showToast('Error: ' + response.message, 'error');
+                }
+            },
+            error: function (xhr, status, error) {
+                showToast('Error posting comment. Please try again.', 'error');
+            }
+        });
+    });
 
 </script>
+
+@*Script for Uploading Comments on a Particular Post*@
+
+
+@*Script for loading Comments on a Particular Post*@
+
+<script>
+    // Automatically load comments when the modal is opened
+    $(document).ready(function () {
+
+        $(".modal").on("show.bs.modal", function () {
+            const postId = $(this).data("post-id");
+            const userId = $(this).data("post-user-id");
+            //console.log(userId, postId);
+
+            if (postId && userId) {
+                loadCommentsInModal(userId, postId);
+            } else {
+                console.error("Post ID or User ID is missing.");
+            }
+
+        });
+    });
+
+    // Function to load comments in the modal
+    function loadCommentsInModal(userId, postId) {
+        $.ajax({
+            url: '/UploadPost/GetCommentOnPost',
+            type: 'GET',
+            data: { userId: userId, postId: postId },
+            success: function (response) {
+                if (response.success) {
+                    let commentsHtml = response.comments.length
+                        ? response.comments.map(comment => `
+                        <div class="comment mb-2" style="padding: 10px 20px;">
+                            <div style="display: flex; align-items: center;">
+                                <img src="${comment.UserImage ? '/Assets/Images/' + comment.UserImage : '/Assets/Images/user (13).png'}"
+                                     style="height: 2rem; width: auto;" class="rounded-circle me-3" alt="User Avatar">
+                                <span style="display: flex;align-items: center;gap: 20px;text-align: center;white-space: nowrap;">
+                                    <h6 class="modal-title">${comment.FirstName}  ${comment.LastName}</h6>
+                                <small>${comment.CommentedOn ? formatTimeAgo(comment.CommentedOn) : 'Unknown Date'}</small>
+                                </span>
+
+                            </div>
+                            <p style="padding-left: 50px; white-space: pre-wrap !important;">${comment.CommentText}</p>
+                        </div>`).join("")
+                        : "<p>No comments available.</p>";
+
+                    $(`#commentsContainer${postId}`).html(commentsHtml);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("Error loading comments. Please try again.");
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+
+    // Function to show toast notifications
+    function showToast(message, type) {
+        const toastContainer = $('#toastContainer');
+        const toast = $(`
+        <div class="toast align-items-center text-white bg-${type === 'success' ? 'success' : 'danger'} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">${message}</div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `);
+        toastContainer.append(toast);
+        const bsToast = new bootstrap.Toast(toast[0]);
+        bsToast.show();
+        toast.on('hidden.bs.toast', () => toast.remove());
+    }
+
+    function generateComments(comments) {
+        let commentsHtml = "";
+
+        if (comments.length === 0) {
+            commentsHtml = "<p>No comments available.</p>";
+        } else {
+            comments.forEach(comment => {
+                commentsHtml += `
+                <div class="comment mb-2">
+                    <div style="display: flex; align-items: center;">
+                        <img src="${comment.UserImage ? '/Assets/Images/' + comment.UserImage : '/Assets/Images/user (13).png'}"
+                             style="height: 2rem; width: auto;" class="rounded-circle me-2" alt="User Avatar">
+                        <h6>${comment.FirstName} ${comment.LastName}</strong>
+                    </div>
+                    <p>${comment.CommentText}</p>
+                    <small>${comment.CommentedOn}</small>
+                </div>`;
+            });
+        }
+
+        return commentsHtml;
+    }
+</script>
+
+@*end Script for loading Comments on a Particular Post*@
+
+
