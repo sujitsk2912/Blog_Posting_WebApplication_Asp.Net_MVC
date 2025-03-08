@@ -197,7 +197,7 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
                     using (SqlCommand cmd = new SqlCommand("usp_GetCommentsByPost", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@UserID", userId);
+                        //cmd.Parameters.AddWithValue("@UserID", userId);
                         cmd.Parameters.AddWithValue("@PostID", postId);
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
@@ -231,6 +231,62 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
                 conn.Close();
             }
         }
+
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+
+        public JsonResult DeleteComment(int postID, int commentID)
+        {
+            try
+            {
+                // Ensure user is authenticated and get UserID from the session
+                if (Session["UserID"] == null)
+                {
+                    return Json(new { success = false, message = "Unauthorized access. Please log in." }, JsonRequestBehavior.AllowGet);
+                }
+
+                int userID = Convert.ToInt32(Session["UserID"]);
+
+                // Validate input parameters
+                if (userID <= 0 || postID <= 0 || commentID <= 0)
+                {
+                    return Json(new { success = false, message = "Invalid input parameters." }, JsonRequestBehavior.AllowGet);
+                }
+
+               
+                    conn.Open();
+
+                    using (SqlCommand cmd = new SqlCommand("usp_DeleteCommentOnPost", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@UserID", userID);
+                        cmd.Parameters.AddWithValue("@PostID", postID);
+                        cmd.Parameters.AddWithValue("@CommentID", commentID);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected < 0)
+                        {
+                            return Json(new { success = true, message = "Comment deleted successfully." }, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            return Json(new { success = false, message = "No comment deleted. Ensure you have permission." }, JsonRequestBehavior.AllowGet);
+                        }
+                    }
+                
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
 
 
     }

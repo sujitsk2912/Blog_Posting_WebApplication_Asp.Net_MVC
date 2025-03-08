@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Home Page";
+    var sessionUserId = Session["UserID"];
 }
 
 
@@ -51,6 +52,11 @@
     .modal-body {
         scroll-behavior: smooth;
     }
+   img {
+    pointer-events: auto; /* Keep click enabled */
+    -webkit-user-drag: none; /* Disable drag in Safari/Chrome */
+    user-drag: none;         /* Standard for modern browsers */
+}
 </style>
 
 
@@ -177,7 +183,7 @@
 
                 <!-- post action model loaded here -->
 
-                <div class="modal fade" id="postActionsModal" tabindex="-1" aria-labelledby="postActionsModalLabel" aria-hidden="true">
+                <div class="modal fade" id="postActionsModal"  tabindex="-1" aria-labelledby="postActionsModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" style="max-width:500px !important">
                         <div class="modal-content">
                             <div class="modal-body" id="postActionsContent">
@@ -189,33 +195,48 @@
 
                 <!--end  post action model loaded here -->
 
+                 
+
                 <!-- Post body start -->
 
-    <p id="getPostContent">${(post.PostContent || '').replace(/\n/g, '<br>')}</p>
+                    <p id="getPostContent">${(post.PostContent || '').replace(/\n/g, '<br>')}</p>
 
 
-    ${post.imgURL ? `<img id="getPostImage" src="/PostAssets/images/${post.imgURL}" class="img-fluid rounded mb-3" alt="Blog Image">` : ''}
+                    ${post.imgURL ? `<img id="getPostImage" src="/PostAssets/images/${post.imgURL}" class="img-fluid rounded mb-3" alt="Blog Image">` : ''}
 
-    <div class="d-flex justify-content-between">
-        <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-heart pe-1"></i>Like</button>
-        <button data-bs-toggle="modal" data-bs-target="#commentModal${post.PostID || ''}" class="btn btn-outline-secondary btn-sm">
-            <i class="fa-solid fa-comment pe-1"></i>Comment
-        </button>
-        <button class="btn btn-outline-success btn-sm"><i class="fa-solid fa-share pe-1"></i>Share</button>
-        <button class="btn btn-outline-info btn-sm"><i class="fa-solid fa-bookmark pe-1"></i>Save</button>
-    </div>
-</div>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-heart pe-1"></i>Like</button>
+                        <button data-bs-toggle="modal" onclick="loadCommentsInModal(${post.UserID}, ${post.PostID})" data-bs-target="#commentModal${post.PostID || ''}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fa-solid fa-comment pe-1"></i>Comment
+                        </button>
+                        <button class="btn btn-outline-success btn-sm"><i class="fa-solid fa-share pe-1"></i>Share</button>
+                        <button class="btn btn-outline-info btn-sm"><i class="fa-solid fa-bookmark pe-1"></i>Save</button>
+                    </div>
+                </div>
 
 
-<!-- End post body -->
+        <!-- End post body -->
 
 
                 <!-- Comment Modal -->
 
+                 <!-- Comment Actions Modal -->
+                    <div class="modal fade"  id="commentActionsModal" tabindex="-1" aria-labelledby="commentActionsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px !important;">
+                            <div class="modal-content">
+                                <div class="modal-body" id="commentActionsContent">
+                                    <!-- Dynamic content will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                 <!--end  comment action model loaded here -->
+
                <form id="commentForm" enctype="multipart/form-data">
                 @Html.AntiForgeryToken() <!-- Add this line -->
 
-             <div class="modal fade" onclick="loadCommentsInModal(${post.UserID}, ${post.PostID})"
+             <div class="modal fade" 
 id="commentModal${post.PostID}" data-post-id="${post.PostID}" data-post-user-id="${post.UserID}" tabindex="-1" aria-labelledby="commentModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" style="width: 80%">
                     <div class="modal-content" style="display: flex; flex-direction: row; height: 90vh; width: 100%; background: #000; color:#fff">
@@ -574,7 +595,10 @@ $(document).ready(function () {
             return;
         }
 
-        const postUserId = $(`#commentModal${postId}`).data('post-user-id');
+        // Get session UserID from hidden input
+        //const postUserId = $('#sessionUserId').val();
+
+        const postUserId =  @ViewBag.UserId;
 
         //console.log(postUserId, postId, commentContent);
 
@@ -653,9 +677,18 @@ $(document).ready(function () {
                             <div style="display: flex; align-items: center;">
                                 <img src="${comment.UserImage ? '/Assets/Images/' + comment.UserImage : '/Assets/Images/user (13).png'}"
                                      style="height: 2rem; width: auto;" class="rounded-circle me-3" alt="User Avatar">
-                                <span style="display: flex;align-items: center;gap: 20px;text-align: center;white-space: nowrap;">
+                                <span style="display: flex;align-items: center;gap: 20px;text-align: center;white-space: nowrap; width:100%">
                                     <h6 class="modal-title">${comment.FirstName}  ${comment.LastName}</h6>
-                                <small>${comment.CommentedOn ? formatTimeAgo(comment.CommentedOn) : 'Unknown Date'}</small>
+                                    <small>${comment.CommentedOn ? formatTimeAgo(comment.CommentedOn) : 'Unknown Date'}</small>
+                                     <span style="width:100% !important">
+                                         <!-- Action Trigger -->
+                                            <i class="bi bi-three-dots"
+                                               style="cursor:pointer"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#commentActionsModal"
+                                               onclick="openCommentActions(${comment.CommentID}, ${comment.PostID}, ${comment.UserID}, '${comment.CommentText}')">
+                                            </i>
+                                      </span>
                                 </span>
 
                             </div>
@@ -718,5 +751,175 @@ $(document).ready(function () {
 </script>
 
 @*end Script for loading Comments on a Particular Post*@
+
+
+@*post comment actions for comments*@
+
+<script>
+    // Store current comment data globally
+    let currentCommentData = {};
+
+    // Open Comment Actions Modal without closing the main modal
+    function openCommentActions(commentID, postID, userID, commentText) {
+        currentCommentData = { commentID, postID, userID, commentText };
+
+        console.log(currentCommentData);
+        // Populate the Comment Actions Modal with options
+        const loggedInUserId = @ViewBag.UserId; // Replace with your method to get the logged-in user's ID
+        let actionsHtml = '';
+
+        if (userID === loggedInUserId) {
+            actionsHtml = `
+                <a href="javascript:void(0)" id="editCommentBtn" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
+                    <i class="fa-solid fa-edit me-2 text-primary"></i> Edit Comment
+                </a>
+                <a href="javascript:void(0)" id="deleteCommentBtn" class="text-decoration-none text-danger fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
+                    <i class="fa-solid fa-trash-alt me-2"></i> Delete Comment
+                </a>`;
+        } else {
+            actionsHtml = `
+                <a href="javascript:void(0)" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
+                    <i class="fa-solid fa-flag me-2 text-warning"></i> Report Comment
+                </a>`;
+        }
+
+        actionsHtml += `
+            <a href="javascript:void(0)" class="text-decoration-none text-secondary fw-semibold d-flex align-items-center" data-bs-dismiss="modal" aria-label="Close" style="padding:10px 0;">
+                <i class="fa-solid fa-close me-2"></i> Cancel
+            </a>`;
+
+        // Insert actions into the modal
+        $('#commentActionsContent').html(actionsHtml);
+
+        // Show the Comment Actions Modal
+        const actionModal = new bootstrap.Modal(document.getElementById('commentActionsModal'));
+        actionModal.show();
+
+        // Handle Edit Comment
+        $("#editCommentBtn").off("click").on("click", function () {
+            editComment(currentCommentData);
+        });
+
+        // Handle Delete Comment
+        $("#deleteCommentBtn").off("click").on("click", function () {
+            deleteComment(currentCommentData);
+        });
+    }
+
+    // Edit Comment Function
+    function editComment(data) {
+        const newCommentText = prompt("Edit your comment:", data.commentText);
+        if (newCommentText !== null && newCommentText.trim() !== "") {
+            const token = $('input[name="__RequestVerificationToken"]').val();
+
+            $.ajax({
+                url: '/UploadPost/EditComment',
+                type: 'POST',
+                headers: {
+                    'RequestVerificationToken': token
+                },
+                data: { commentID: data.commentID, commentText: newCommentText },
+                success: function (response) {
+                    if (response.success) {
+                        showToast("Comment updated successfully!", 'success');
+                        loadCommentsInModal(data.userID, data.postID);
+                        closeModal('commentActionsModal');
+                    } else {
+                        showToast("Failed to update comment.", 'error');
+                    }
+                },
+                error: function () {
+                    showToast("Error updating comment.", 'error');
+                }
+            });
+        }
+    }
+
+    // Delete Comment Function
+    function deleteComment(data) {
+        //if (confirm("Are you sure you want to delete this comment?")) {
+            //const token = $('input[name="__RequestVerificationToken"]').val();
+            $.ajax({
+                url: '/UploadPost/DeleteComment',
+                type: 'POST',
+                //headers: {
+                //    'RequestVerificationToken': token
+                //},
+                data: {
+                    postID: data.postID,
+                    commentID: data.commentID,
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log(response);
+
+                        showToast("Comment deleted successfully!", 'success');
+                        loadCommentsInModal(data.userID, data.postID);
+                        //closeModal('commentActionsModal');
+                    } else {
+                        showToast("Failed to delete comment.", 'error');
+                    }
+                },
+                error: function () {
+                    showToast("Error deleting comment.", 'error');
+                }
+            });
+        //}
+    }
+
+    // Helper Function to Close a Specific Modal
+    //function closeModal(modalId) {
+    //    const modalElement = document.getElementById(modalId);
+    //    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    //    if (modalInstance) {
+    //        modalInstance.hide();
+    //    }
+    //}
+
+    function loadCommentsInModal(userId, postId) {
+        $.ajax({
+            url: '/UploadPost/GetCommentOnPost',
+            type: 'GET',
+            data: { userId: userId, postId: postId },
+            success: function (response) {
+                if (response.success) {
+                    let commentsHtml = response.comments.length
+                        ? response.comments.map(comment => `
+                        <div class="comment mb-2" style="padding: 10px 20px;">
+                            <div style="display: flex; align-items: center;">
+                                <img src="${comment.UserImage ? '/Assets/Images/' + comment.UserImage : '/Assets/Images/user (13).png'}"
+                                     style="height: 2rem; width: auto;" class="rounded-circle me-3" alt="User Avatar">
+                                <span style="display: flex;align-items: center;gap: 20px;text-align: center;white-space: nowrap;width:100%">
+                                    <h6 class="modal-title">${comment.FirstName}  ${comment.LastName}</h6>
+                                    <small>${comment.CommentedOn ? formatTimeAgo(comment.CommentedOn) : 'Unknown Date'}</small>
+                                    <span style="width:100%;display:flex; place-content: end;">
+                                        <!-- Action Trigger -->
+                                        <i class="bi bi-three-dots"
+                                           style="cursor:pointer"
+                                           data-bs-backdrop="static" 
+                                           data-bs-toggle="modal"
+                                           data-bs-target="#commentActionsModal"
+                                           onclick="openCommentActions(${comment.CommentID}, ${comment.PostID}, ${comment.UserID}, '${comment.CommentText.replace(/'/g, "\\'")}')">
+                                        </i>
+                                    </span>
+                                </span>
+                            </div>
+                            <p style="padding-left: 50px; white-space: pre-wrap !important;">${comment.CommentText}</p>
+                        </div>`).join("")
+                        : "<p>No comments available.</p>";
+
+                    $(`#commentsContainer${postId}`).html(commentsHtml);
+                } else {
+                    showToast(response.message, 'error');
+                }
+            },
+            error: function (xhr, status, error) {
+                showToast("Error loading comments. Please try again.", 'error');
+                console.error(xhr.responseText);
+            }
+        });
+    }
+</script>
+@* end post comment actions for comments*@
 
 
