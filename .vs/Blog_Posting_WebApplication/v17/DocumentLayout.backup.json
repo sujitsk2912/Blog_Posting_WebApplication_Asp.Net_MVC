@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|d:\\blog_posting_webapplication\\blog_posting_webapplication_asp.net_mvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\controllers\\uploadpost\\uploadpostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|d:\\blog_posting_webapplication\\blog_posting_webapplication_asp.net_mvc\\controllers\\uploadpost\\uploadpostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:controllers\\uploadpost\\uploadpostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\scripts\\ajaxscipts\\uploadpost.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:scripts\\ajaxscipts\\uploadpost.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\views\\shared\\_layoutaccounts.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:views\\shared\\_layoutaccounts.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -25,6 +29,26 @@
     {
       "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\controllers\\account\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:controllers\\account\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\scripts\\ajaxscipts\\getposts.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:scripts\\ajaxscipts\\getposts.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\scripts\\ajaxscipts\\uploadcomments.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:scripts\\ajaxscipts\\uploadcomments.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\scripts\\ajaxscipts\\imagepreview.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:scripts\\ajaxscipts\\imagepreview.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\scripts\\ajaxscipts\\adjusttextareaheight.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:scripts\\ajaxscipts\\adjusttextareaheight.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\scripts\\ajaxscipts\\postactions.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:scripts\\ajaxscipts\\postactions.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\app_start\\filterconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -70,31 +94,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
               "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Home\\Index.cshtml",
               "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAEsAAAAAAAAAAAASwFgAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAADcBAAAAAAAAAAAiwEIBAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-03-01T10:08:38.791Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "UploadPostController.cs",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\UploadPost\\UploadPostController.cs",
               "RelativeDocumentMoniker": "Controllers\\UploadPost\\UploadPostController.cs",
               "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\UploadPost\\UploadPostController.cs",
               "RelativeToolTip": "Controllers\\UploadPost\\UploadPostController.cs",
-              "ViewState": "AgIAAFsAAAAAAAAAAAAqwF8AAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAIwCEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-06T05:42:36.024Z",
               "IsPinned": true,
@@ -102,64 +125,132 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "AccountController.cs",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\Account\\AccountController.cs",
               "RelativeDocumentMoniker": "Controllers\\Account\\AccountController.cs",
               "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\Account\\AccountController.cs",
               "RelativeToolTip": "Controllers\\Account\\AccountController.cs",
-              "ViewState": "AgIAAKkAAAAAAAAAAAAAADkAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAJoAAAAAAAAAAAAAADkAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-06T05:43:50.001Z",
               "IsPinned": true
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+              "Name": "ST:0:0:{cf577b8c-4134-11d2-83e5-00c04f9902c1}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAAawDkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T05:43:13.448Z"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:1163145134:0:{83107a3e-496a-485e-b455-16ddb978e55e}"
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAADQAAAAAAAAAAMBtwBkAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-06T05:51:09.682Z"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "_LayoutAccounts.cshtml",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Shared\\_LayoutAccounts.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_LayoutAccounts.cshtml",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Shared\\_LayoutAccounts.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_LayoutAccounts.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABIAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-06T05:51:08.969Z"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:129:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "uploadPost.js",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\uploadPost.js",
+              "RelativeDocumentMoniker": "Scripts\\AjaxScipts\\uploadPost.js",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\uploadPost.js",
+              "RelativeToolTip": "Scripts\\AjaxScipts\\uploadPost.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-03-07T08:32:39.763Z"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:2:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "getPosts.js",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\getPosts.js",
+              "RelativeDocumentMoniker": "Scripts\\AjaxScipts\\getPosts.js",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\getPosts.js",
+              "RelativeToolTip": "Scripts\\AjaxScipts\\getPosts.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-03-07T08:32:09.565Z"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:1:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "uploadComments.js",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\uploadComments.js",
+              "RelativeDocumentMoniker": "Scripts\\AjaxScipts\\uploadComments.js",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\uploadComments.js",
+              "RelativeToolTip": "Scripts\\AjaxScipts\\uploadComments.js",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-03-07T08:52:20.67Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 9,
+              "Title": "imagePreview.js",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\imagePreview.js",
+              "RelativeDocumentMoniker": "Scripts\\AjaxScipts\\imagePreview.js",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\imagePreview.js",
+              "RelativeToolTip": "Scripts\\AjaxScipts\\imagePreview.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-03-07T08:33:04.458Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "adjustTextareaHeight.js",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\adjustTextareaHeight.js",
+              "RelativeDocumentMoniker": "Scripts\\AjaxScipts\\adjustTextareaHeight.js",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\adjustTextareaHeight.js",
+              "RelativeToolTip": "Scripts\\AjaxScipts\\adjustTextareaHeight.js",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABIAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-03-07T08:33:22.21Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "postActions.js",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\postActions.js",
+              "RelativeDocumentMoniker": "Scripts\\AjaxScipts\\postActions.js",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Scripts\\AjaxScipts\\postActions.js",
+              "RelativeToolTip": "Scripts\\AjaxScipts\\postActions.js",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAQwGgAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-03-07T08:33:43.951Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "Web.config",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Web.config",
               "RelativeDocumentMoniker": "Views\\Web.config",
@@ -171,46 +262,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABEAAAAPAQAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-06T05:51:09.682Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "_LayoutAccounts.cshtml",
-              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Shared\\_LayoutAccounts.cshtml",
-              "RelativeDocumentMoniker": "Views\\Shared\\_LayoutAccounts.cshtml",
-              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Shared\\_LayoutAccounts.cshtml",
-              "RelativeToolTip": "Views\\Shared\\_LayoutAccounts.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-06T05:51:08.969Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "HomeController.cs",
-              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\HomeController.cs",
-              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
-              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\HomeController.cs",
-              "RelativeToolTip": "Controllers\\HomeController.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAmwDkAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T05:43:13.448Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 12,
               "Title": "FilterConfig.cs",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\App_Start\\FilterConfig.cs",
               "RelativeDocumentMoniker": "App_Start\\FilterConfig.cs",
@@ -222,7 +274,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "RouteConfig.cs",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\App_Start\\RouteConfig.cs",
               "RelativeDocumentMoniker": "App_Start\\RouteConfig.cs",
@@ -234,7 +286,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "Web.config",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Web.config",
               "RelativeDocumentMoniker": "Web.config",
@@ -247,7 +299,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "packages.config",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\packages.config",
               "RelativeDocumentMoniker": "packages.config",
@@ -259,7 +311,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 17,
               "Title": "Login.cshtml",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Account\\Login.cshtml",
               "RelativeDocumentMoniker": "Views\\Account\\Login.cshtml",
@@ -271,7 +323,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "Global.asax.cs",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Global.asax.cs",
               "RelativeDocumentMoniker": "Global.asax.cs",
@@ -283,7 +335,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 19,
               "Title": "Register.cshtml",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Account\\Register.cshtml",
               "RelativeDocumentMoniker": "Views\\Account\\Register.cshtml",
@@ -295,7 +347,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 20,
               "Title": "About.cshtml",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Home\\About.cshtml",
               "RelativeDocumentMoniker": "Views\\Home\\About.cshtml",

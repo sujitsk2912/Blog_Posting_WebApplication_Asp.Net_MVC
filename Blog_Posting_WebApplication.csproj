@@ -274,6 +274,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\AjaxScipts\adjustTextareaHeight.js" />
+    <Content Include="Scripts\AjaxScipts\uploadComments.js" />
+    <Content Include="Scripts\AjaxScipts\postActions.js" />
+    <Content Include="Scripts\AjaxScipts\imagePreview.js" />
+    <Content Include="Scripts\AjaxScipts\uploadPost.js" />
+    <Content Include="Scripts\AjaxScipts\getPosts.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

@@ -30,7 +30,6 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public JsonResult UploadPost(string postContent, HttpPostedFileBase imageFile)
@@ -39,66 +38,53 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
             {
                 conn.Open();
 
-                // Check if the user is logged in
                 if (Session["UserID"] == null)
                 {
-                    return Json(new { success = false, message = "User not logged in! Please login first...", redirectTo = Url.Action("Login", "Account") }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = false, message = "User not logged in!", redirectTo = Url.Action("Login", "Account") }, JsonRequestBehavior.AllowGet);
                 }
 
                 int userId = Convert.ToInt32(Session["UserID"]);
                 string imageUrl = null;
 
-                // Save the uploaded image to PostAssets/images folder
                 if (imageFile != null && imageFile.ContentLength > 0)
                 {
-                    try
+                    var imagesFolder = Server.MapPath("~/PostAssets/images");
+                    if (!Directory.Exists(imagesFolder))
                     {
-                        // Resolve the physical path to the PostAssets/images folder
-                        var imagesFolder = Server.MapPath("~/PostAssets/images");
-                        System.Diagnostics.Debug.WriteLine("Resolved Images Folder Path: " + imagesFolder);
-
-                        // Ensure the folder exists
-                        if (!Directory.Exists(imagesFolder))
-                        {
-                            Directory.CreateDirectory(imagesFolder);
-                            System.Diagnostics.Debug.WriteLine("Created Images Folder: " + imagesFolder);
-                        }
-
-                        // Generate a unique file name
-                        var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-                        var filePath = Path.Combine(imagesFolder, fileName);
-                        System.Diagnostics.Debug.WriteLine("Resolved File Path: " + filePath);
-
-                        // Save the file to the PostAssets/images folder
-                        imageFile.SaveAs(filePath);
-                        System.Diagnostics.Debug.WriteLine("File Saved Successfully: " + filePath);
-
-                        // Set the image URL for the database
-                        imageUrl = fileName;
-                        System.Diagnostics.Debug.WriteLine("Image URL: " + imageUrl);
+                        Directory.CreateDirectory(imagesFolder);
                     }
-                    catch (Exception ex)
-                    {
-                        // Log the exception for debugging
-                        System.Diagnostics.Debug.WriteLine("Error saving file: " + ex.Message);
-                        return Json(new { success = false, message = "Error saving file: " + ex.Message }, JsonRequestBehavior.AllowGet);
-                    }
+
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    var filePath = Path.Combine(imagesFolder, fileName);
+
+                    imageFile.SaveAs(filePath);
+                    imageUrl = fileName;
                 }
 
-                // Insert post data into the database
-                SqlCommand cmdUploadPost = new SqlCommand("usp_InsertPostData", conn);
-                cmdUploadPost.CommandType = CommandType.StoredProcedure;
-                cmdUploadPost.Parameters.AddWithValue("@UserID", userId);
-                cmdUploadPost.Parameters.AddWithValue("@PostedOn", DateTime.Now);
-                cmdUploadPost.Parameters.AddWithValue("@PostContent", postContent ?? (object)DBNull.Value);
-                cmdUploadPost.Parameters.AddWithValue("@imgURL", imageUrl ?? (object)DBNull.Value); // Use DBNull.Value if no image is uploaded
+                if (postContent != "" || imageFile != null)
+                {
 
-                cmdUploadPost.ExecuteNonQuery();
+                    using (var cmdUploadPost = new SqlCommand("usp_InsertPostData", conn))
+                    {
+                        cmdUploadPost.CommandType = CommandType.StoredProcedure;
+                        cmdUploadPost.Parameters.AddWithValue("@UserID", userId);
+                        cmdUploadPost.Parameters.AddWithValue("@PostedOn", DateTime.Now);
+                        cmdUploadPost.Parameters.AddWithValue("@PostContent", postContent ?? (object)DBNull.Value);
+                        cmdUploadPost.Parameters.AddWithValue("@imgURL", imageUrl ?? (object)DBNull.Value);
+                        cmdUploadPost.ExecuteNonQuery();
+                    }
 
-                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { success = false, message = "Post uploading failed!" }, JsonRequestBehavior.AllowGet);
+
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine("Content: " + postContent);
+                System.Diagnostics.Debug.WriteLine("Image: " + (imageFile != null ? imageFile.FileName : "NULL"));
+
+                System.Diagnostics.Debug.WriteLine("Error: " + ex.Message);
                 return Json(new { success = false, message = "Error: " + ex.Message }, JsonRequestBehavior.AllowGet);
             }
             finally
@@ -106,6 +92,8 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
                 conn.Close();
             }
         }
+
+
 
 
         [HttpPost]
