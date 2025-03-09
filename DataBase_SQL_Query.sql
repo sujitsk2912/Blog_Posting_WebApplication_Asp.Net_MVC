@@ -532,8 +532,3 @@ BEGIN
 END;
 
 exec  usp_GetUserProfileByID @UserID = 104
-
-
-
-
-

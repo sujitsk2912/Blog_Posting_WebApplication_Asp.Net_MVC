@@ -143,12 +143,11 @@
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
                     <img src="\Assets\Images\user (12).png" style="height:4rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#postModal" class="form-control fw-semibold text-start" style="width: 100%; border-radius: 50px; padding:10px 25px; background-color: #b8b0b030 ">Start a post</button>
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#postModal" class="form-control fw-normal text-start" style="width: 100%;color:grey;border:none; border-radius: 50px; padding:10px 25px; background-color: #b8b0b030 ">Start a post</button>
                 </div>
             </div>
         </div>
 
-        <hr />
 
         <!-- Blog Feed -->
         <div id="blogContainer" class="container mt-4">
@@ -219,7 +218,7 @@
                          style="height:3rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
                     <div style="display: flex;justify-content: space-between;align-items: self-start;width: 100%;">
                         <div>
-                           <h6 id="getUsername" class="mb-0">${post.FirstName || ''} ${post.LastName || ''}</h6>
+                           <h6 id="getUsername" onclick="getUserProfile(${post.UserID})" style="cursor:pointer"  class="mb-0">${post.FirstName || ''} ${post.LastName || ''}</h6>
                             <small id="getPostedOn" class="text-muted">${post.PostedOn ? formatTimeAgo(post.PostedOn) : 'Unknown Date'}</small>
                         </div>
                        <span>
@@ -853,9 +852,9 @@ $(document).ready(function () {
 
         if (userID === loggedInUserId) {
             actionsHtml = `
-                <a href="javascript:void(0)" id="editCommentBtn" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
+              <!--  <a href="javascript:void(0)" id="editCommentBtn" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
                     <i class="fa-solid fa-edit me-2 text-primary"></i> Edit Comment
-                </a>
+                </a> -->
                 <a href="javascript:void(0)" id="deleteCommentBtn" class="text-decoration-none text-danger fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
                     <i class="fa-solid fa-trash-alt me-2"></i> Delete Comment
                 </a>`;
@@ -880,9 +879,9 @@ $(document).ready(function () {
         actionModal.show();
 
         // Handle Edit Comment
-        $("#editCommentBtn").off("click").on("click", function () {
-            editComment(currentCommentData);
-        });
+        //$("#editCommentBtn").off("click").on("click", function () {
+        //    editComment(currentCommentData);
+        //});
 
         // Handle Delete Comment
         $("#deleteCommentBtn").off("click").on("click", function () {
@@ -891,33 +890,33 @@ $(document).ready(function () {
     }
 
     // Edit Comment Function
-    function editComment(data) {
-        const newCommentText = prompt("Edit your comment:", data.commentText);
-        if (newCommentText !== null && newCommentText.trim() !== "") {
-            const token = $('input[name="__RequestVerificationToken"]').val();
+    //function editComment(data) {
+    //    const newCommentText = prompt("Edit your comment:", data.commentText);
+    //    if (newCommentText !== null && newCommentText.trim() !== "") {
+    //        const token = $('input[name="__RequestVerificationToken"]').val();
 
-            $.ajax({
-                url: '/UploadPost/EditComment',
-                type: 'POST',
-                headers: {
-                    'RequestVerificationToken': token
-                },
-                data: { commentID: data.commentID, commentText: newCommentText },
-                success: function (response) {
-                    if (response.success) {
-                        showToast("Comment updated successfully!", 'success');
-                        loadCommentsInModal(data.userID, data.postID);
-                        closeModal('commentActionsModal');
-                    } else {
-                        showToast("Failed to update comment.", 'error');
-                    }
-                },
-                error: function () {
-                    showToast("Error updating comment.", 'error');
-                }
-            });
-        }
-    }
+    //        $.ajax({
+    //            url: '/UploadPost/EditComment',
+    //            type: 'POST',
+    //            headers: {
+    //                'RequestVerificationToken': token
+    //            },
+    //            data: { commentID: data.commentID, commentText: newCommentText },
+    //            success: function (response) {
+    //                if (response.success) {
+    //                    showToast("Comment updated successfully!", 'success');
+    //                    loadCommentsInModal(data.userID, data.postID);
+    //                    closeModal('commentActionsModal');
+    //                } else {
+    //                    showToast("Failed to update comment.", 'error');
+    //                }
+    //            },
+    //            error: function () {
+    //                showToast("Error updating comment.", 'error');
+    //            }
+    //        });
+    //    }
+    //}
 
     // Delete Comment Function
     function deleteComment(data) {

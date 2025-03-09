@@ -26,6 +26,8 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            background:#000;
+            color:#fff;
         }
 
         @@media (min-width: 576px) {
@@ -35,9 +37,29 @@
                 margin-left: auto;
             }
         }
+
+        .bi-three-dots, h6{
+            color:#fff !important;
+        }
+
+        .card {
+            background: transparent !important;
+            border-bottom: 0.5px solid grey !important;
+            padding: 20px 0 !important;
+            border: 0.5px solid #262424 !important;
+        }
+
+            
+
+        #getPostedOn {
+            color: grey !important;
+        }
+        #getPostContent {
+            color: #fff !important;
+        }
     </style>
 </head>
-<body style="background-color: #F4F2EE">
+<body>
     <!-- Toast Container -->
     <div id="toastContainer" aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
         <!-- Toasts will be dynamically inserted here -->
