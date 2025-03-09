@@ -128,6 +128,52 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult EditPost(int userId, int postId, string postContent, HttpPostedFileBase imageFile)
+        {
+            try
+            {
+                conn.Open();
+
+                // Handle Image Upload and Get URL
+                string imgURL = null;
+                if (imageFile != null && imageFile.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(imageFile.FileName);
+                    string filePath = Path.Combine(Server.MapPath("~/PostAssets/images/"), fileName);
+                    imageFile.SaveAs(filePath);
+                    imgURL = "/PostAssets/images/" + fileName; // Relative URL to store in DB
+                }
+
+                using (SqlCommand cmdEditPost = new SqlCommand("usp_EditPost", conn))
+                {
+                    cmdEditPost.CommandType = CommandType.StoredProcedure;
+                    cmdEditPost.Parameters.AddWithValue("@UserID", userId);
+                    cmdEditPost.Parameters.AddWithValue("@PostID", postId);
+                    cmdEditPost.Parameters.AddWithValue("@PostContent", postContent);
+                    cmdEditPost.Parameters.AddWithValue("@ImgURL", imgURL ?? (object)DBNull.Value); // Handle no image case
+
+                    int rowsAffected = cmdEditPost.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        return Json(new { success = true, message = "Post updated successfully." });
+                    }
+                    return Json(new { success = false, message = "Post not found or unauthorized." });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error: " + ex.Message });
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
 
         [HttpPost]
         //[ValidateAntiForgeryToken]

@@ -230,14 +230,50 @@ END;
 
 -----------------------------------------------------------------------
 
-CREATE PROCEDURE usp_DeletePost
-@UserID INT,
-@PostID INT
+CREATE OR ALTER PROCEDURE usp_EditPost
+    @UserID INT,
+    @PostID INT,
+    @PostContent NVARCHAR(MAX),
+    @ImgURL NVARCHAR(500)
 AS
 BEGIN
-	DELETE UploadPost
-	WHERE UserID = @UserID AND PostID = @PostID
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        -- Ensure the post exists and belongs to the correct user
+        IF NOT EXISTS (SELECT 1 FROM UploadPost WHERE PostID = @PostID AND UserID = @UserID)
+        BEGIN
+            THROW 50001, 'Unauthorized: User cannot edit this post.', 1;
+        END;
+
+        -- Update PostUploadContent table (Edit the post content)
+        UPDATE PostUploadContent
+        SET PostContent = @PostContent
+        WHERE PostID = @PostID;
+
+        -- Update postImageContainer table (If the image exists, update; otherwise, insert a new one)
+        IF EXISTS (SELECT 1 FROM postImageContainer WHERE PostID = @PostID)
+        BEGIN
+            UPDATE postImageContainer
+            SET imgURL = @ImgURL
+            WHERE PostID = @PostID;
+        END
+        ELSE
+        BEGIN
+            INSERT INTO postImageContainer (PostID, imgURL)
+            VALUES (@PostID, @ImgURL);
+        END;
+
+        COMMIT TRANSACTION;
+        SELECT 'Post updated successfully' AS Message;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        SELECT ERROR_MESSAGE() AS ErrorMessage;
+    END CATCH
 END;
+
+
 
 -----------------------------------------------------------------
 CREATE TABLE PostComments
