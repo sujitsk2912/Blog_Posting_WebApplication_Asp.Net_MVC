@@ -315,7 +315,7 @@ END;
 
 ----------------------------------------------------------------------
 
-select * from PostComments
+select * from PostComments where PostID = 4084
 
 -------------------------------------------------------------------
 
@@ -440,3 +440,100 @@ BEGIN
 END;
 
 -------------------------------------------------------
+
+
+-- UserProfile Table (Related Table)
+CREATE TABLE UserProfile
+(
+    ProfileID INT PRIMARY KEY IDENTITY(1,1),             
+    UserID INT NOT NULL,                                  
+    BioData NVARCHAR(MAX) NULL,                           
+    Followers INT DEFAULT 0,                              
+    Following INT DEFAULT 0,                              
+    PostsCount INT DEFAULT 0,                              
+    Website NVARCHAR(200) NULL,                           
+    Location NVARCHAR(200) NULL,                          
+    SocialLinks NVARCHAR(MAX) NULL,                       
+    LastLogin DATETIME NULL,                              
+    UpdatedAt DATETIME DEFAULT GETDATE(),                 
+    FOREIGN KEY (UserID) REFERENCES UserDetails(UserID) 
+    ON DELETE CASCADE                                     
+);
+
+
+select * from UserProfile where UserID = 104
+
+--------------------------------------------------------
+
+CREATE OR ALTER TRIGGER trg_UpdatePostsCount
+ON UploadPost
+AFTER INSERT, DELETE
+AS
+BEGIN
+    UPDATE UserProfile
+    SET PostsCount = (
+        SELECT COUNT(*) 
+        FROM UploadPost 
+        WHERE UploadPost.UserID = UserProfile.UserID
+    )
+    WHERE UserID IN (
+        SELECT UserID FROM inserted 
+        UNION 
+        SELECT UserID FROM deleted
+    );
+END;
+
+----------------------------------------------------
+
+CREATE OR ALTER TRIGGER trg_InsertUserProfile
+ON UserDetails
+AFTER INSERT
+AS
+BEGIN
+    INSERT INTO UserProfile (UserID, BioData, Followers, Following, PostsCount, Website, Location, SocialLinks, LastLogin, UpdatedAt)
+    SELECT UserID, NULL, 0, 0, 0, NULL, NULL, NULL, NULL, GETDATE()
+    FROM inserted;
+END;
+------------------------------------------------------------------------------------------------
+SELECT * FROM UserProfile 
+SELECT * FROM UploadPost
+SELECT * FROM UserDetails
+
+
+SELECT * FROM UserDetails WHERE UserID = 104;
+
+SELECT * FROM UserProfile WHERE UserID = 104;
+
+
+------------------------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE usp_GetUserProfileByID
+    @UserID INT
+AS
+BEGIN
+    SELECT 
+        UD.UserID, 
+        UD.FirstName, 
+        UD.LastName, 
+        UD.DateOfBirth, 
+        UD.Gender, 
+        UD.Mobile, 
+        UD.Email, 
+        UD.UserImage, 
+        UD.CreatedAt, 
+        UD.IsActive,
+        UP.BioData, 
+        UP.Followers, 
+        UP.Following, 
+        UP.PostsCount
+    FROM UserDetails UD
+    LEFT JOIN UserProfile UP ON UD.UserID = UP.UserID
+    WHERE UD.UserID = @UserID;
+END;
+
+exec  usp_GetUserProfileByID @UserID = 104
+
+
+
+
+
