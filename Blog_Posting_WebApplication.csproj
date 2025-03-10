@@ -316,7 +316,6 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_LayoutAccounts.cshtml" />
     <Content Include="Views\UploadPost\UploadPost.cshtml" />
-    <Content Include="Views\UserProfile\UserProfile.cshtml" />
     <Content Include="Views\UserProfile\ShowUserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>

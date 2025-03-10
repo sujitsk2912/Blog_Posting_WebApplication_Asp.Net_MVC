@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Web.Mvc;
@@ -95,6 +96,7 @@ namespace Blog_Posting_WebApplication.Controllers.UserProfile
                                 UserID = reader["UserID"],
                                 FirstName = reader["FirstName"],
                                 LastName = reader["LastName"],
+                                Username = reader["Username"],
                                 DateOfBirth = reader["DateOfBirth"],
                                 Gender = reader["Gender"],
                                 Mobile = reader["Mobile"],
@@ -121,6 +123,59 @@ namespace Blog_Posting_WebApplication.Controllers.UserProfile
             }
 
             return null;
+        }
+
+
+
+        [HttpPost]
+        public JsonResult GetUsersByUsername(string searchTerm)
+        {
+            List<object> users = new List<object>();
+
+            try
+            {
+                conn.Open();
+                var command = new SqlCommand("usp_SearchUserByName", conn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@SearchTerm", searchTerm ?? "");
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (searchTerm != "" || searchTerm==null)
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            users.Add(new
+                            {
+                                UserID = reader["UserID"],
+                                FirstName = reader["FirstName"],
+                                LastName = reader["LastName"],
+                                Username = reader["Username"],
+                                UserImage = reader["UserImage"]
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    users.Clear();
+                }
+
+                return Json(users, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error: " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+            finally
+            {
+                if (conn.State == ConnectionState.Open)
+                {
+                    conn.Close();
+                }
+            }
         }
     }
 }

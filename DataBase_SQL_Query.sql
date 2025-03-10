@@ -1,12 +1,37 @@
 create database BLOG_POSTER_DB
 
 -------- CREATE UserDetails TABLE FOR REGISTERED USERS ------------------
+/*
+DROP TABLE IF EXISTS UserLoggedInData;
+DROP TABLE IF EXISTS PostComments;
+DROP TABLE IF EXISTS postImageContainer;
+DROP TABLE IF EXISTS PostUploadContent;
+DROP TABLE IF EXISTS UploadPost;
+DROP TABLE IF EXISTS UserDetails;
+DROP TABLE IF EXISTS PostContent; 
+
+SELECT 
+    fk.name AS ForeignKeyName,
+    tp.name AS ParentTable,
+    tr.name AS ReferencedTable
+FROM 
+    sys.foreign_keys AS fk
+JOIN 
+    sys.tables AS tp ON fk.parent_object_id = tp.object_id
+JOIN 
+    sys.tables AS tr ON fk.referenced_object_id = tr.object_id
+WHERE 
+    tr.name = 'UserDetails';  */
+
+
+-----------------------------------------------------------------------------
 
 CREATE TABLE UserDetails
 (
 UserID INT PRIMARY KEY IDENTITY(100,1) NOT NULL,
 FirstName NVARCHAR(200) NOT NULL,
 LastName NVARCHAR(200) NOT NULL,
+Username NVARCHAR(200) UNIQUE NOT NULL,
 DateOfBirth DATETIME NOT NULL,
 Gender VARCHAR(20) NOT NULL,
 Mobile NVARCHAR(20) NULL UNIQUE,
@@ -15,6 +40,10 @@ UserImage NVARCHAR(MAX) NULL,
 CreatedAt DATETIME NOT NULL,
 IsActive BIT NOT NULL
 );
+
+
+SELECT * FROM UserDetails
+
 
 --------------------------------------------------------
 
@@ -58,15 +87,16 @@ CREATE OR ALTER PROCEDURE sp_CheckUserLogin
 (
     @Email NVARCHAR(50),
     @Mobile NVARCHAR(20),
+    @Username NVARCHAR(50),
     @Password NVARCHAR(MAX)
 )
 AS
 BEGIN
-    SELECT US.UserID, US.FirstName, US.LastName, US.Email, US.Mobile
+    SELECT US.UserID, US.FirstName, US.LastName, US.Email, US.Mobile, US.Username
     FROM UserDetails AS US
     INNER JOIN UserLoggedInData AS ULG
     ON US.UserID = ULG.UserID
-    WHERE (US.Email = @Email OR US.Mobile = @Mobile)
+    WHERE (US.Email = @Email OR US.Mobile = @Mobile OR US.Username = @Username)
     AND ULG.Password = @Password;
 END;
 
@@ -74,9 +104,10 @@ END;
 --------------------------------------------------------------------------
 
 
-CREATE PROCEDURE sp_InsertUserWithLogin
+CREATE OR ALTER PROCEDURE sp_InsertUserWithLogin
     @FirstName NVARCHAR(200),
     @LastName NVARCHAR(200),
+	@Username NVARCHAR(200),
     @DateOfBirth DATETIME,
     @Gender VARCHAR(20),
     @Mobile NVARCHAR(20) = NULL,
@@ -88,8 +119,8 @@ BEGIN
         BEGIN TRANSACTION;
 
         -- Insert data into UserDetails and capture the generated UserID
-        INSERT INTO UserDetails (FirstName, LastName, DateOfBirth, Gender, Mobile, Email, CreatedAt, IsActive)
-        VALUES (@FirstName, @LastName, @DateOfBirth, @Gender, @Mobile, @Email, GETDATE(), 1);
+        INSERT INTO UserDetails (FirstName, LastName, Username, DateOfBirth, Gender, Mobile, Email, CreatedAt, IsActive)
+        VALUES (@FirstName, @LastName,@Username, @DateOfBirth, @Gender, @Mobile, @Email, GETDATE(), 1);
 
         DECLARE @NewUserID INT = SCOPE_IDENTITY();
 
@@ -114,7 +145,6 @@ END;
 
 
 ----------------------------------------------------------------
-
 
 CREATE TABLE UploadPost
 (
@@ -209,6 +239,7 @@ BEGIN
     SELECT 
         UD.FirstName,
         UD.LastName,
+        UD.Username,
         UD.UserImage,
         UP.PostID,
         UP.UserID,
@@ -276,6 +307,12 @@ END;
 
 
 -----------------------------------------------------------------
+
+SELECT * FROM PostComments
+SELECT * FROM UploadPost
+
+------------------------------------------------------
+
 CREATE TABLE PostComments
 (
     CommentID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
@@ -323,6 +360,7 @@ END;
 
 
 -------------------------------------------------------
+
 CREATE OR ALTER PROCEDURE usp_PostComments
     @PostID INT,                -- Input: PostID
     @UserID INT,                -- Input: UserID
@@ -436,6 +474,9 @@ CREATE TABLE PostLikes (
     UNIQUE (UserID, PostID) -- Prevent duplicate likes
 );
 
+
+DROP TABLE PostLikes
+
 --------------------------------------------------------------------
 
 CREATE OR ALTER PROCEDURE usp_ToggleLikeOnPost
@@ -476,7 +517,6 @@ BEGIN
 END;
 
 -------------------------------------------------------
-
 
 -- UserProfile Table (Related Table)
 CREATE TABLE UserProfile
@@ -531,6 +571,7 @@ BEGIN
     FROM inserted;
 END;
 ------------------------------------------------------------------------------------------------
+
 SELECT * FROM UserProfile 
 SELECT * FROM UploadPost
 SELECT * FROM UserDetails
@@ -551,6 +592,8 @@ BEGIN
         UD.UserID, 
         UD.FirstName, 
         UD.LastName, 
+        UD.Username, 
+        UD.Username, 
         UD.DateOfBirth, 
         UD.Gender, 
         UD.Mobile, 
@@ -568,3 +611,26 @@ BEGIN
 END;
 
 exec  usp_GetUserProfileByID @UserID = 104
+
+
+---------------------------------------------------------------------
+
+CREATE OR ALTER PROCEDURE usp_SearchUserByName
+    @SearchTerm NVARCHAR(200) = ''
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Trim leading/trailing spaces from the search term
+    SET @SearchTerm = LTRIM(RTRIM(@SearchTerm));
+
+    -- Search for records where FirstName or LastName contains the search term
+    SELECT UserID, FirstName, LastName, Username, UserImage
+    FROM UserDetails
+    WHERE FirstName LIKE '%' + @SearchTerm + '%'
+       OR LastName LIKE '%' + @SearchTerm + '%'
+       OR Username LIKE '%' + @SearchTerm + '%';
+END;
+
+exec usp_SearchUserByName  @SearchTerm = 'v'
+-------------------------------------

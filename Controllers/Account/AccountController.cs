@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace Blog_Posting_WebApplication.Controllers.Account
 {
-   
+
     public class AccountController : Controller
     {
 
@@ -42,6 +42,7 @@ namespace Blog_Posting_WebApplication.Controllers.Account
                 SqlCommand checkCmd = new SqlCommand("sp_CheckUserLogin", conn);
 
                 checkCmd.CommandType = CommandType.StoredProcedure;
+                checkCmd.Parameters.AddWithValue("@Username", emailorphone);
                 checkCmd.Parameters.AddWithValue("@Email", emailorphone);
                 checkCmd.Parameters.AddWithValue("@Mobile", emailorphone);
                 checkCmd.Parameters.AddWithValue("@Password", password);
@@ -143,9 +144,15 @@ namespace Blog_Posting_WebApplication.Controllers.Account
                     // ✅ Insert User if Email and Mobile are unique
                     SqlCommand cmd = new SqlCommand("sp_InsertUserWithLogin", conn);
 
+
+                    // ✅ Generate a random username
+                    string userName = GenerateUniqueUsername(firstName, lastName);
+
+
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@FirstName", firstName);
                     cmd.Parameters.AddWithValue("@LastName", lastName);
+                    cmd.Parameters.AddWithValue("@Username", userName);
                     cmd.Parameters.AddWithValue("@DateOfBirth", dateOfBirth);
                     cmd.Parameters.AddWithValue("@Gender", gender);
                     cmd.Parameters.AddWithValue("@Mobile", mobile);
@@ -173,10 +180,78 @@ namespace Blog_Posting_WebApplication.Controllers.Account
             }
             finally
             {
-                    conn.Close();
+                conn.Close();
             }
         }
 
 
+        private string GenerateUniqueUsername(string firstName, string lastName)
+        {
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+            {
+                throw new ArgumentException("First name and last name are required.");
+            }
+
+            string userName;
+            bool isUnique;
+            int attempts = 0;
+
+            do
+            {
+                // Generate a random username that contains both first name and last name
+                userName = GenerateRandomUsername(firstName, lastName);
+
+                // Check if the username is unique
+                isUnique = IsUsernameUnique(userName);
+
+                attempts++;
+                if (attempts > 10) // Prevent infinite loops
+                {
+                    throw new Exception("Unable to generate a unique username. Please try again.");
+                }
+            } while (!isUnique); // Repeat until a unique username is found
+
+            return userName;
+        }
+
+        private bool IsUsernameUnique(string username)
+        {
+            using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM UserDetails WHERE Username = @Username", conn))
+            {
+                cmd.Parameters.AddWithValue("@Username", username);
+                int count = (int)cmd.ExecuteScalar();
+                return count == 0; // Return true if the username is unique
+            }
+        }
+
+        private string GenerateRandomUsername(string firstName, string lastName)
+        {
+            firstName = firstName.ToLower().Trim();
+            lastName = lastName.ToLower().Trim();
+
+            // Random number and letter generators
+            Random random = new Random();
+            int randomNum = random.Next(10, 99); // 2-digit number
+            char randomLetter = (char)('a' + random.Next(0, 26)); // Random letter (a-z)
+
+            // Different username patterns that always include both first name and last name
+            string[] patterns = new string[]
+            {
+                firstName + lastName, // johnsmith
+                firstName + "." + lastName, // john.smith
+                firstName + "_" + lastName, // john_smith
+                firstName + "." + lastName + randomNum, // john.smith42
+                firstName + "_" + lastName + randomNum, // john_smith12
+                firstName + lastName + randomNum, // johnsmith42
+                //firstName + lastName + randomLetter, // johnsmithx
+                //firstName.Substring(0, 1) + lastName, // jsmith
+                //firstName + lastName.Substring(0, 1), // johns
+                firstName.Substring(0, 1) + lastName + randomNum, // jsmith42
+                firstName + lastName.Substring(0, 1) + randomNum // johns42
+            };
+
+            // Return a random pattern
+            return patterns[random.Next(patterns.Length)];
+        }
     }
 }

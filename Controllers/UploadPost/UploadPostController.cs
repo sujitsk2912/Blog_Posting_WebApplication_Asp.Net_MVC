@@ -204,7 +204,7 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
                     int rowsAffected = cmdPostComment.ExecuteNonQuery();
 
                     // Check if the comment was inserted successfully
-                    if (rowsAffected > 0)
+                    if (rowsAffected < 0)
                     {
                         return Json(new { success = true, message = "Commented on post successfully." });
                     }

@@ -73,6 +73,10 @@
 
 <main style="display:flex">
 
+
+  
+
+
     <aside class="col-3" style="height: 90vh; position: sticky; top: 0;">
         <div class="container">
             <!-- Post Form -->
@@ -108,12 +112,12 @@
 
         <form id="postForm" enctype="multipart/form-data">
             @Html.AntiForgeryToken() <!-- Add this line -->
-            <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
                 <div class="modal-dialog" style="max-width: 600px !important; width:100% !important">
                     <div class="modal-content" style="min-height:500px; ">
                         <div class="modal-header">
                             <img src="/Assets/Images/user (12).png" style="height:3rem;width:fit-content" class="rounded-circle me-3" alt="User Avatar">
-                            <h5 class="modal-title" id="exampleModalLabel">@ViewBag.FirstName @ViewBag.LastName</h5>
+                            <h5 class="modal-title" id="postModalLabel" style="color:#000">@ViewBag.FirstName @ViewBag.LastName</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
@@ -140,7 +144,7 @@
 
         <!-- Post Form -->
         <div class="card ">
-            <div class="card-body">
+            <div class="card-body py-0">
                 <div class="d-flex align-items-center mb-3">
                     <img src="\Assets\Images\user (12).png" style="height:4rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
                     <button type="button" data-bs-toggle="modal" data-bs-target="#postModal" class="form-control fw-normal text-start" style="width: 100%;color:grey;border:none; border-radius: 50px; padding:10px 25px; background-color: #b8b0b030 ">Start a post</button>
@@ -274,7 +278,7 @@
                 <!-- Comment Modal -->
 
                  <!-- Comment Actions Modal -->
-                    <div class="modal fade"  id="commentActionsModal" tabindex="-1" aria-labelledby="commentActionsModalLabel" aria-hidden="true">
+                    <div class="modal fade commentModal"  id="commentActionsModal" tabindex="-1" aria-labelledby="commentActionsModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" style="max-width: 500px !important;">
                             <div class="modal-content">
                                 <div class="modal-body" id="commentActionsContent">
@@ -319,9 +323,9 @@
                                         <div style="display:flex;">
                                             <img src="${post.UserImage ? '/Assets/Images/' + post.UserImage : '/Assets/Images/user (13).png'}"
                                                  style="height:2rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
-                                            <h6 class="modal-title" style="cursor:pointer" id="commentModalLabel" onclick="getUserProfile(${post.UserID})">${post.FirstName + ' ' + post.LastName || 'User'}</h6>
+                                            <h6 class="modal-title" style="cursor:pointer;font-size:15px" id="commentModalLabel" onclick="getUserProfile(${post.UserID})">${post.FirstName + ' ' + post.LastName || 'User'}</h6>
                                         </div>
-                                        <p style="padding-left:50px; white-space: pre-wrap !important;margin:0">${post.PostContent}</p>
+                                        <p style="padding-left:50px; white-space: pre-wrap !important;margin-top:-5px;font-size:14px">${post.PostContent}</p>
                                     </div>
                                     <hr style="margin-top:0;    opacity: 0.15;"/>
 
@@ -731,7 +735,7 @@ $(document).ready(function () {
     // Automatically load comments when the modal is opened
     $(document).ready(function () {
 
-        $(".modal").on("show.bs.modal", function () {
+        $(".commentModal").on("show.bs.modal", function () {
             const postId = $(this).data("post-id");
             const userId = $(this).data("post-user-id");
             //console.log(userId, postId);
@@ -1013,7 +1017,7 @@ $(document).ready(function () {
     function getUserProfile(userId) {
         //const token = $('input[name="__RequestVerificationToken"]').val();
 
-        console.log("User ID:", userId);
+        //console.log("User ID:", userId);
         //console.log("Token:", token);
 
         $.ajax({
@@ -1045,5 +1049,9 @@ $(document).ready(function () {
 
 
 @*end funtion for redirecting on user profile*@
+
+
+
+
 
 
