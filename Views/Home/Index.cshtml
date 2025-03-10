@@ -1012,40 +1012,6 @@ $(document).ready(function () {
 @* end post comment actions for comments*@
 
 
-@*funtion for redirecting on user profile*@
-<script>
-    function getUserProfile(userId) {
-        //const token = $('input[name="__RequestVerificationToken"]').val();
-
-        //console.log("User ID:", userId);
-        //console.log("Token:", token);
-
-        $.ajax({
-            url: '/UserProfile/UserProfile',
-            type: 'POST',
-            data: { userId: userId },
-            //headers: {
-            //    'RequestVerificationToken': token
-            //},
-            //dataType: 'json', // Ensure the response is treated as JSON
-            success: function (response) {
-                if (response.success) {
-                    window.location.href = '/UserProfile/ShowUserProfile?userId=' + userId;
-
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error("Error fetching user profile:", error);
-                alert('Error fetching user profile.');
-            }
-        });
-    }
-
-    // Call the function with the user ID
-    //getUserProfile(123); // Replace 123 with the actual user ID you want to test with
-</script>
 
 
 @*end funtion for redirecting on user profile*@
