@@ -195,7 +195,7 @@
             url: '/Home/GetPosts',  // Ensure correct path
             type: 'GET',
             success: function (response) {
-                console.log('AJAX Response:', response); // Verify the output
+                //console.log('AJAX Response:', response); // Verify the output
                 populateBlogFeed(response); // Call the function to populate the blog feed
             },
             error: function (xhr, status, error) {
@@ -205,7 +205,7 @@
 
         // Function to populate the blog feed using map()
         function populateBlogFeed(posts) {
-            console.log('Posts Data:', posts); // Log the posts data
+            //console.log('Posts Data:', posts); // Log the posts data
             const container = $('#blogContainer'); // Ensure this exists in your HTML
             if (!container.length) {
                 console.error('Container #blogContainer not found!');
@@ -849,7 +849,7 @@ $(document).ready(function () {
     function openCommentActions(commentID, postID, userID, commentText) {
         currentCommentData = { commentID, postID, userID, commentText };
 
-        console.log(currentCommentData);
+        //console.log(currentCommentData);
         // Populate the Comment Actions Modal with options
         const loggedInUserId = @ViewBag.UserId; // Replace with your method to get the logged-in user's ID
         let actionsHtml = '';
@@ -938,7 +938,7 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     if (response.success) {
-                        console.log(response);
+                        //console.log(response);
 
                         showToast("Comment deleted successfully!", 'success');
                         loadCommentsInModal(data.userID, data.postID);

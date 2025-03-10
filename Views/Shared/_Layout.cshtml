@@ -156,7 +156,7 @@
                 return;
             }
 
-            console.log('Search term:', searchTerm); // Debugging output
+            //console.log('Search term:', searchTerm); // Debugging output
 
             // Perform AJAX request to fetch users
             $.ajax({
@@ -223,7 +223,7 @@
                 data: { userId: userId },
                 //headers: {
                 //    'RequestVerificationToken': token
-                //},
+                //},console.log
                 //dataType: 'json', // Ensure the response is treated as JSON
                 success: function (response) {
                     if (response.success) {
