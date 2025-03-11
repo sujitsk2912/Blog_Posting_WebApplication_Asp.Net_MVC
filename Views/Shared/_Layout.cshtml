@@ -62,6 +62,85 @@
         .search::placeholder {
             color: gray;
         }
+
+        .modal-content {
+            background: #262626 !important;
+        }
+        /*        .modal-body a{
+            text-align:center;
+        }*/
+
+        .modal-header {
+            border: none;
+            border-bottom: 1px solid #363636;
+        }
+
+        .modal-dialog {
+            max-width: 500px;
+        }
+
+        .modal-header h5 {
+            border: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            margin-top: 16px;
+            align-items: stretch;
+            border: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            /*            flex-shrink: 0;*/
+            font: inherit;
+            font-size: 100%;
+            /*            margin: 16px calc(2* 16px);*/
+            word-wrap: anywhere;
+            padding: 0;
+            position: relative;
+            text-align: center;
+            vertical-align: baseline;
+        }
+
+        .modal-body {
+            align-items: stretch;
+            border: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            font: inherit;
+            font-size: 100%;
+            margin: 0;
+            /*            margin-top: 16px; */
+            padding: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+
+            .modal-body button {
+                font-weight: 600;
+                background-color: transparent;
+                border-bottom: 0;
+                border-left: 0;
+                border-right: 0;
+                cursor: pointer;
+                font-size: 15px;
+                line-height: 1.5;
+                margin: 0;
+                min-height: 48px;
+                padding: 4px 8px;
+                text-align: center;
+                -webkit-user-select: none;
+                vertical-align: middle;
+                border-top: 1px solid #363636;
+                transition:0.1s all;
+            }
+
+                .modal-body button:hover {
+                    background-color: #36363645 !important;
+                }
+
+           
     </style>
 </head>
 <body>
@@ -95,10 +174,10 @@
             <div class="modal-dialog" style="max-width:800px !important;margin-top:70px">
                 <div class="modal-content" style="background: #000; color: #fff; border: 0.5px solid #262424 !important;">
                     <div class="modal-header" style="border-bottom: 0.5px solid #262424">
-                        <input class="form-control me-2 search" id="search" oninput="searchUser()" type="text" placeholder="Search" autocomplete="off" style="width:100%; color: #f5f5f5; border: none; border-radius: 50px; font-size: 15px; padding: 10px 25px; background-color: #363636;">                       
+                        <input class="form-control me-2 search" id="search" oninput="searchUser()" type="text" placeholder="Search" autocomplete="off" style="width:100%; color: #f5f5f5; border: none; border-radius: 50px; font-size: 15px; padding: 10px 25px; background-color: #363636;">
                         <button type="button" class="btn-close btn-close-white" style="position: absolute; right: -25px; top: -20px;" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" style="padding:20px">
                         <!-- Search results will be dynamically populated here -->
                     </div>
                 </div>
@@ -183,17 +262,17 @@
 
                 users.forEach(function (user) {
                     var userItem = `
-                            <div class="user-item" style="padding: 10px; border-bottom: 1px solid #262424; display: flex; align-items: center; text-align: center;">
-                                <img  onclick="getUserProfile(${user.UserID})" src="${user.UserImageURL ? '/Assets/Images/' + user.UserImageURL : '/Assets/Images/user (13).png'}"
-                                     style="cursor:pointer;height:2.5rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
-                                <div style="display: flex;flex-direction: column;text-align: start;">
-                                     <h6 onclick="getUserProfile(${user.UserID})"
-                                    style="cursor:pointer; margin:0; font-size:15px;" class="mb-0">
-                                    ${user.FirstName} ${user.LastName}
-                                </h6>
-                                <small  onclick="getUserProfile(${user.UserID})" style="cursor:pointer;font-size: 14px;color: grey;font-weight: 400;"> ${user.Username}</small>
-                                </div>
-                            </div>`;
+                                    <div class="user-item" style="padding: 10px; border-bottom: 1px solid #363636; display: flex; align-items: center; text-align: center;">
+                                        <img  onclick="getUserProfile(${user.UserID})" src="${user.UserImageURL ? '/Assets/Images/' + user.UserImageURL : '/Assets/Images/user (13).png'}"
+                                             style="cursor:pointer;height:2.5rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
+                                        <div style="display: flex;flex-direction: column;text-align: start;">
+                                             <h6 onclick="getUserProfile(${user.UserID})"
+                                            style="cursor:pointer; margin:0; font-size:15px;" class="mb-0">
+                                            ${user.FirstName} ${user.LastName}
+                                        </h6>
+                                        <small  onclick="getUserProfile(${user.UserID})" style="cursor:pointer;font-size: 14px;color: grey;font-weight: 400;"> ${user.Username}</small>
+                                        </div>
+                                    </div>`;
                     modalBody.innerHTML += userItem;
                 });
             }
@@ -247,5 +326,9 @@
         // Call the function with the user ID
         //getUserProfile(123); // Replace 123 with the actual user ID you want to test with
     </script>
+
+    @*<script src="~/Scripts/AjaxScipts/postActions.js"></script>*@
+
 </body>
+
 </html>

@@ -147,6 +147,9 @@
     .nav-link:focus, .nav-link:hover{
 /*        color:#fff !important;*/
     }
+    .modal-dialog {
+        max-width: 500px !important;
+    }
     .nav-tabs {
         border: none !important;
         place-content: center;
@@ -185,33 +188,42 @@
         <!-- post action model loaded here -->
 
         <div class="modal fade" id="profileActionsModal" tabindex="-1" aria-labelledby="profileActionsModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" style="max-width:500px !important">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body" id="profileActionsContent">
-                        <a href="javascript:void(0)" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
-                            <i class="fa-solid fa-edit me-2 text-primary"></i> Edit Post
-                        </a>
-                        <a href="javascript:void(0)" class="text-decoration-none text-danger fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
-                            <i class="fa-solid fa-trash-alt me-2"></i> Delete Post
-                        </a>
-                        <a href="javascript:void(0)" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
-                            <i class="fa-solid fa-share me-2 text-primary"></i> Share
-                        </a>
-                        <a href="javascript:void(0)" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
-                            <i class="fa-solid fa-link me-2 text-primary"></i> Copy Link
-                        </a>
-                        <a href="javascript:void(0)" class="text-decoration-none text-secondary fw-semibold d-flex align-items-center" data-bs-dismiss="modal" aria-label="Close" style="padding:10px 0;">
-                            <i class="fa-solid fa-close me-2"></i> Cancel
-                        </a>
+                        <button type="button" class="text-primary" style="border: 0 !important;">Edit Post</button>
+                        <button type="button" class="text-danger">Delete Post</button>
+                        <button type="button" class="text-success">Share</button>
+                        <button type="button" class="text-info"> Copy Link</button>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="text-secondary">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <!--end  post action model loaded here -->
+        <!-- change photo model -->
+
+        <div class="modal fade" id="changePhotoModal" tabindex="-1" aria-labelledby="changePhotoModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="" id="changePhotoModalLabel">Change Profile Photo</h5>
+                    </div>
+                    <div class="modal-body" id="changePhotoModalContent" >
+                        <button type="button" class="text-primary">Upload Photo</button>
+                        <button type="button" class="text-danger">Remove Current Photo</button>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="text-secondary">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--end change photo model -->
+
         <!-- Profile Header -->
         <section class="profile-header">
-            <img id="profileImage" src="https://picsum.photos/120/120?random=1" alt="Profile Image" class="profile-image">
+            <img  data-bs-toggle="modal" data-bs-target="#changePhotoModal" id="profileImage" src="https://picsum.photos/120/120?random=1" alt="Profile Image" class="profile-image">
             <div class="profile-info">
                 <div style="display: flex; min-width: 0; gap: 30px; flex-shrink: 1;  margin-bottom: 20px; word-wrap: break-word; white-space: nowrap; ">
                     <div class="" style=" padding-top: 30px; ">
@@ -240,7 +252,7 @@ outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; te
                                style="cursor:pointer"></i>
                         </span>
                     </div>
-                   
+
                 </div>
                 <section class="stats">
                     <ul>
@@ -272,7 +284,7 @@ outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; te
         </section>
 
         <!-- Posts Section -->
-        <section>
+        <section id="post-grid-section">
             <div style=" border-top: 0.2px solid #a8a8a861;">
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
@@ -350,6 +362,7 @@ outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; te
                         $('#notFoundContainer').show();
                         $('.profile-header').hide();
                         $('.posts-grid').hide();
+                        $('#post-grid-section').hide();
 
                         // Apply CSS to the container
                         $('.container').css({

@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|d:\\blog_posting_webapplication\\blog_posting_webapplication_asp.net_mvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\controllers\\userprofile\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:controllers\\userprofile\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:views\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
@@ -15,16 +23,8 @@
       "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\controllers\\uploadpost\\uploadpostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:controllers\\uploadpost\\uploadpostcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|d:\\blog_posting_webapplication\\blog_posting_webapplication_asp.net_mvc\\controllers\\userprofile\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|solutionrelative:controllers\\userprofile\\userprofilecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{5784C96D-8FF1-4AF0-9DBA-F997B3B5B541}|Blog_Posting_WebApplication.csproj|D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\views\\uploadpost\\uploadpost.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -113,8 +113,48 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 16,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAHYAAAAAAAAAAAAAAIMAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-01T10:08:38.791Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserProfileController.cs",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\UserProfile\\UserProfileController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserProfile\\UserProfileController.cs",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\UserProfile\\UserProfileController.cs",
+              "RelativeToolTip": "Controllers\\UserProfile\\UserProfileController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-09T07:54:38.05Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ShowUserProfile.cshtml",
+              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\UserProfile\\ShowUserProfile.cshtml",
+              "RelativeDocumentMoniker": "Views\\UserProfile\\ShowUserProfile.cshtml",
+              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\UserProfile\\ShowUserProfile.cshtml",
+              "RelativeToolTip": "Views\\UserProfile\\ShowUserProfile.cshtml",
+              "ViewState": "AgIAAGYBAAAAAAAAAAAqwFUBAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-03-09T10:08:42.751Z",
+              "IsPinned": true
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
@@ -148,6 +188,16 @@
               "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             },
             {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "PipelineRuntime.cs",
+              "DocumentMoniker": "C:\\Users\\skhan\\AppData\\Local\\Temp\\.vsdbgsrc\\fad30302b237d92069815b81c40b3d20103d2bcbac9cabbd0533beb0fb93026c\\PipelineRuntime.cs",
+              "ToolTip": "C:\\Users\\skhan\\AppData\\Local\\Temp\\.vsdbgsrc\\fad30302b237d92069815b81c40b3d20103d2bcbac9cabbd0533beb0fb93026c\\PipelineRuntime.cs",
+              "ViewState": "AgIAAOQBAAAAAAAAAAAUwPIBAAAHAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-08T10:07:57.138Z"
+            },
+            {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
             },
@@ -157,49 +207,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAACsBAAAAAAAAAAAuwDQBAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-01T10:08:38.791Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "UserProfileController.cs",
-              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\UserProfile\\UserProfileController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UserProfile\\UserProfileController.cs",
-              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\UserProfile\\UserProfileController.cs",
-              "RelativeToolTip": "Controllers\\UserProfile\\UserProfileController.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAJsAAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-09T07:54:38.05Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ShowUserProfile.cshtml",
-              "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\UserProfile\\ShowUserProfile.cshtml",
-              "RelativeDocumentMoniker": "Views\\UserProfile\\ShowUserProfile.cshtml",
-              "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\UserProfile\\ShowUserProfile.cshtml",
-              "RelativeToolTip": "Views\\UserProfile\\ShowUserProfile.cshtml",
-              "ViewState": "AgIAAGYBAAAAAAAAAAAqwFUBAABIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-09T10:08:42.751Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "UploadPostController.cs",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\UploadPost\\UploadPostController.cs",
               "RelativeDocumentMoniker": "Controllers\\UploadPost\\UploadPostController.cs",
@@ -207,12 +215,11 @@
               "RelativeToolTip": "Controllers\\UploadPost\\UploadPostController.cs",
               "ViewState": "AgIAABsAAAAAAAAAAAASwCQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T05:42:36.024Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T05:42:36.024Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
@@ -220,12 +227,11 @@
               "RelativeToolTip": "Controllers\\HomeController.cs",
               "ViewState": "AgIAAKEAAAAAAAAAAAAawJwAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-10T18:19:53.2Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-10T18:19:53.2Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Web.config",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Web.config",
               "RelativeDocumentMoniker": "Web.config",
@@ -238,16 +244,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Web.config",
               "DocumentMoniker": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Web.config",
               "RelativeDocumentMoniker": "Views\\Web.config",
               "ToolTip": "D:\\Blog_Posting_WebApplication\\Blog_Posting_WebApplication_Asp.Net_MVC\\Views\\Web.config",
               "RelativeToolTip": "Views\\Web.config",
-              "ViewState": "AgIAABcAAAAAAAAAAAAqwCgAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAqwCUAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-03-06T09:26:02.54Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T09:26:02.54Z"
             },
             {
               "$type": "Document",
@@ -259,8 +264,7 @@
               "RelativeToolTip": "Views\\UploadPost\\UploadPost.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA8AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-10T18:19:31.373Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-10T18:19:31.373Z"
             },
             {
               "$type": "Document",
@@ -272,8 +276,7 @@
               "RelativeToolTip": "Controllers\\Account\\AccountController.cs",
               "ViewState": "AgIAAPcAAAAAAAAAAADwvwABAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T05:43:50.001Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T05:43:50.001Z"
             },
             {
               "$type": "Document",
@@ -285,8 +288,7 @@
               "RelativeToolTip": "Views\\Shared\\_LayoutAccounts.cshtml",
               "ViewState": "AgIAAAwAAAAAAAAAAAAqwBYAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-06T05:51:08.969Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T05:51:08.969Z"
             },
             {
               "$type": "Document",
@@ -298,8 +300,7 @@
               "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAAKwAAAAAAAAAAAAEwLoAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-06T05:51:09.682Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T05:51:09.682Z"
             },
             {
               "$type": "Document",
@@ -311,8 +312,7 @@
               "RelativeToolTip": "Views\\Account\\Register.cshtml",
               "ViewState": "AgIAAFoAAAAAAAAAAAAAAGkAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-06T09:08:54.323Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T09:08:54.323Z"
             },
             {
               "$type": "Document",
@@ -324,18 +324,7 @@
               "RelativeToolTip": "Views\\Account\\Login.cshtml",
               "ViewState": "AgIAADwAAAAAAAAAAAAAAE4AAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-06T09:17:04.896Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "PipelineRuntime.cs",
-              "DocumentMoniker": "C:\\Users\\skhan\\AppData\\Local\\Temp\\.vsdbgsrc\\fad30302b237d92069815b81c40b3d20103d2bcbac9cabbd0533beb0fb93026c\\PipelineRuntime.cs",
-              "ToolTip": "C:\\Users\\skhan\\AppData\\Local\\Temp\\.vsdbgsrc\\fad30302b237d92069815b81c40b3d20103d2bcbac9cabbd0533beb0fb93026c\\PipelineRuntime.cs",
-              "ViewState": "AgIAAOQBAAAAAAAAAAAUwPIBAAAHAAAAAQAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T10:07:57.138Z"
+              "WhenOpened": "2025-03-06T09:17:04.896Z"
             },
             {
               "$type": "Document",
@@ -347,8 +336,7 @@
               "RelativeToolTip": "Views\\_ViewStart.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-03-09T10:09:39.047Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-09T10:09:39.047Z"
             },
             {
               "$type": "Document",

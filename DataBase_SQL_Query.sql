@@ -194,6 +194,8 @@ CREATE TABLE postImageContainer
 
 select * from postImageContainer
 
+delete postImageContainer where PostID = 3019 and UserID = 101
+
 ---------------------------------------------------------------------
 
 CREATE OR ALTER PROCEDURE usp_InsertPostData
@@ -235,6 +237,8 @@ SELECT * FROM UploadPost
 SELECT * FROM PostUploadContent
 SELECT * FROM postImageContainer
 
+
+delete UploadPost where PostID in (3014,3015,3016,3018) and UserID In (101)
 ----------------------------------------------
 
 CREATE OR ALTER PROCEDURE usp_GetPosts
