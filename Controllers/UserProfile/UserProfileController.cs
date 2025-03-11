@@ -101,7 +101,7 @@ namespace Blog_Posting_WebApplication.Controllers.UserProfile
                                 Gender = reader["Gender"],
                                 Mobile = reader["Mobile"],
                                 Email = reader["Email"],
-                                UserImage = reader["UserImage"],
+                                UserImageURL = reader["UserImageURL"],
                                 CreatedAt = reader["CreatedAt"],
                                 IsActive = reader["IsActive"],
                                 BioData = reader["BioData"],
@@ -153,7 +153,7 @@ namespace Blog_Posting_WebApplication.Controllers.UserProfile
                                 FirstName = reader["FirstName"],
                                 LastName = reader["LastName"],
                                 Username = reader["Username"],
-                                UserImage = reader["UserImage"]
+                                UserImageURL = reader["UserImageURL"]
                             });
                         }
                     }

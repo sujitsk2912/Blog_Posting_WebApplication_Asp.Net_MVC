@@ -95,7 +95,8 @@
             <div class="modal-dialog" style="max-width:800px !important;margin-top:70px">
                 <div class="modal-content" style="background: #000; color: #fff; border: 0.5px solid #262424 !important;">
                     <div class="modal-header" style="border-bottom: 0.5px solid #262424">
-                        <input class="form-control me-2 search" id="search" oninput="searchUser()" type="text" placeholder="Search" style="width:100%; color: #f5f5f5; border: none; border-radius: 50px; font-size: 15px; padding: 10px 25px; background-color: #363636;">                        <button type="button" class="btn-close btn-close-white" style="position: absolute; right: -25px; top: -20px;" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <input class="form-control me-2 search" id="search" oninput="searchUser()" type="text" placeholder="Search" autocomplete="off" style="width:100%; color: #f5f5f5; border: none; border-radius: 50px; font-size: 15px; padding: 10px 25px; background-color: #363636;">                       
+                        <button type="button" class="btn-close btn-close-white" style="position: absolute; right: -25px; top: -20px;" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <!-- Search results will be dynamically populated here -->
@@ -183,12 +184,15 @@
                 users.forEach(function (user) {
                     var userItem = `
                             <div class="user-item" style="padding: 10px; border-bottom: 1px solid #262424; display: flex; align-items: center; text-align: center;">
-                                <img src="${user.UserImage ? '/Assets/Images/' + user.UserImage : '/Assets/Images/user (13).png'}"
-                                     style="height:2.5rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
-                                <h6 onclick="getUserProfile(${user.UserID})"
+                                <img  onclick="getUserProfile(${user.UserID})" src="${user.UserImageURL ? '/Assets/Images/' + user.UserImageURL : '/Assets/Images/user (13).png'}"
+                                     style="cursor:pointer;height:2.5rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
+                                <div style="display: flex;flex-direction: column;text-align: start;">
+                                     <h6 onclick="getUserProfile(${user.UserID})"
                                     style="cursor:pointer; margin:0; font-size:15px;" class="mb-0">
                                     ${user.FirstName} ${user.LastName}
                                 </h6>
+                                <small  onclick="getUserProfile(${user.UserID})" style="cursor:pointer;font-size: 14px;color: grey;font-weight: 400;"> ${user.Username}</small>
+                                </div>
                             </div>`;
                     modalBody.innerHTML += userItem;
                 });

@@ -218,7 +218,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
-                    <img id="getUserImage" src="${post.UserImage ? '/Assets/Images/' + post.UserImage : '/Assets/Images/user (13).png'}"
+                    <img id="getUserImage" src="${post.UserImageURL ? post.UserImageURL : '/Assets/Images/user (13).png'}"
                          style="height:3rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
                     <div style="display: flex;justify-content: space-between;align-items: self-start;width: 100%;">
                         <div>
@@ -257,7 +257,7 @@
                     <p id="getPostContent">${(post.PostContent || '').replace(/\n/g, '<br>')}</p>
 
 
-                    ${post.imgURL ? `<img id="getPostImage" src="/PostAssets/images/${post.imgURL}" class="img-fluid rounded mb-3" alt="Blog Image">` : ''}
+                    ${post.PostImageURL ? `<img id="getPostImage" src="${post.PostImageURL}" class="img-fluid rounded mb-3" alt="Blog Image">` : ''}
 
                     <hr />
 
@@ -297,13 +297,13 @@
                 <div class="modal-dialog modal-dialog-centered" style="width: 80%">
                     <div class="modal-content" style="display: flex; flex-direction: row; height: 90vh; width: 100%; background: #000; color:#fff">
                         <div class="col-6 d-flex justify-content-center align-items-center">
-                            <img src="/PostAssets/images/${post.imgURL || 'img1.png'}" class="img-fluid mb-3" alt="">
+                            <img src="${post.PostImageURL}" class="img-fluid mb-3" alt="">
                         </div>
                         <div class="col-6 border" style="border: 0.1px solid #fffdfd3d !important;">
                                                         <button type="button" style="top: -20px;position: absolute;right: -40px;" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
 
                             <div class="modal-header" style="border: 0.1px solid #fffdfd3d !important;">
-                                <img src="${post.UserImage ? '/Assets/Images/' + post.UserImage : '/Assets/Images/user (13).png'}"
+                                <img src="${post.UserImageURL ? post.UserImageURL : '/Assets/Images/user (13).png'}"
                                      style="height:2rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
                                      <div style="display: flex;justify-content: space-between;width: 100%;">
                                      <h6 class="modal-title" id="commentModalLabel">${post.FirstName + ' ' + post.LastName || 'User'}</h6>
@@ -321,7 +321,7 @@
                                 ${post.PostContent ? `
                                     <div style="padding:10px 15px">
                                         <div style="display:flex;">
-                                            <img src="${post.UserImage ? '/Assets/Images/' + post.UserImage : '/Assets/Images/user (13).png'}"
+                                            <img src="${post.UserImageURL ? post.UserImageURL : '/Assets/Images/user (13).png'}"
                                                  style="height:2rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
                                             <h6 class="modal-title" style="cursor:pointer;font-size:15px" id="commentModalLabel" onclick="getUserProfile(${post.UserID})">${post.FirstName + ' ' + post.LastName || 'User'}</h6>
                                         </div>
@@ -368,7 +368,7 @@
                 commentsHTML += `
             <div style="padding:10px 20px">
                 <div style="display:flex;">
-                    <img src="${comment.UserImage ? '/Assets/Images/' + comment.UserImage : '/Assets/Images/user (13).png'}"
+                    <img src="${comment.UserImageURL ? comment.UserImageURL : '/Assets/Images/user (13).png'}"
                          style="height:2rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
                     <h6 class="modal-title">${comment.FirstName || ''} ${comment.LastName || ''}</h6>
                 </div>
@@ -761,7 +761,7 @@ $(document).ready(function () {
                         ? response.comments.map(comment => `
                         <div class="comment mb-2" style="padding: 10px 20px;">
                             <div style="display: flex; align-items: center;">
-                                <img src="${comment.UserImage ? '/Assets/Images/' + comment.UserImage : '/Assets/Images/user (13).png'}"
+                                <img src="${comment.UserImageURL ? comment.UserImageURL : '/Assets/Images/user (13).png'}"
                                      style="height: 2rem; width: auto;" class="rounded-circle me-3" alt="User Avatar">
                                 <span style="display: flex;align-items: center;gap: 20px;text-align: center;white-space: nowrap; width:100%">
                                     <h6 class="modal-title">${comment.FirstName}  ${comment.LastName}</h6>
@@ -822,7 +822,7 @@ $(document).ready(function () {
                 commentsHtml += `
                 <div class="comment mb-2">
                     <div style="display: flex; align-items: center;">
-                        <img src="${comment.UserImage ? '/Assets/Images/' + comment.UserImage : '/Assets/Images/user (13).png'}"
+                        <img src="${comment.UserImageURL ? comment.UserImageURL : '/Assets/Images/user (13).png'}"
                              style="height: 2rem; width: auto;" class="rounded-circle me-2" alt="User Avatar">
                         <h6>${comment.FirstName} ${comment.LastName}</strong>
                     </div>
@@ -974,7 +974,7 @@ $(document).ready(function () {
                         ? response.comments.map(comment => `
                         <div class="comment" style="padding: 5px 15px; margin-bottom:15px">
                             <div style="display: flex; align-items: flex-start;">
-                                <img src="${comment.UserImage ? '/Assets/Images/' + comment.UserImage : '/Assets/Images/user (13).png'}"
+                                <img src="${comment.UserImageURL ? comment.UserImageURL : '/Assets/Images/user (13).png'}"
                                      style="height: 2rem; width: auto;" class="rounded-circle me-3" alt="User Avatar">
                                 <span style="display: flex;   margin-top: -5px !important; flex-start;gap: 20px;text-align: center;white-space: nowrap;width:100%">
                                     <h6 class="modal-title" style="font-size:15px; cursor:pointer" onclick="getUserProfile(${comment.UserID})">${comment.FirstName}  ${comment.LastName}</h6>

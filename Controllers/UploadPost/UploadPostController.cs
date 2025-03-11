@@ -46,6 +46,7 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
 
                 int userId = Convert.ToInt32(Session["UserID"]);
                 string imageUrl = null;
+                byte[] imageData = null;
 
                 if (imageFile != null && imageFile.ContentLength > 0)
                 {
@@ -60,9 +61,14 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
 
                     imageFile.SaveAs(filePath);
                     imageUrl = fileName;
+
+                    using (var binaryReader = new BinaryReader(imageFile.InputStream))
+                    {
+                        imageData = binaryReader.ReadBytes(imageFile.ContentLength);
+                    }
                 }
 
-                if (postContent != "" || imageFile != null)
+                if (postContent != "" || imageData != null)
                 {
 
                     using (var cmdUploadPost = new SqlCommand("usp_InsertPostData", conn))
@@ -71,7 +77,7 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
                         cmdUploadPost.Parameters.AddWithValue("@UserID", userId);
                         cmdUploadPost.Parameters.AddWithValue("@PostedOn", DateTime.Now);
                         cmdUploadPost.Parameters.AddWithValue("@PostContent", postContent ?? (object)DBNull.Value);
-                        cmdUploadPost.Parameters.AddWithValue("@imgURL", imageUrl ?? (object)DBNull.Value);
+                        cmdUploadPost.Parameters.Add(new SqlParameter("@PostImageURL", imageData ?? (object)DBNull.Value) { SqlDbType = SqlDbType.VarBinary });
                         cmdUploadPost.ExecuteNonQuery();
                     }
 
@@ -137,13 +143,13 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
                 conn.Open();
 
                 // Handle Image Upload and Get URL
-                string imgURL = null;
+                string imageURL = null;
                 if (imageFile != null && imageFile.ContentLength > 0)
                 {
                     string fileName = Path.GetFileName(imageFile.FileName);
                     string filePath = Path.Combine(Server.MapPath("~/PostAssets/images/"), fileName);
                     imageFile.SaveAs(filePath);
-                    imgURL = "/PostAssets/images/" + fileName; // Relative URL to store in DB
+                    imageURL = "/PostAssets/images/" + fileName; // Relative URL to store in DB
                 }
 
                 using (SqlCommand cmdEditPost = new SqlCommand("usp_EditPost", conn))
@@ -152,7 +158,7 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
                     cmdEditPost.Parameters.AddWithValue("@UserID", userId);
                     cmdEditPost.Parameters.AddWithValue("@PostID", postId);
                     cmdEditPost.Parameters.AddWithValue("@PostContent", postContent);
-                    cmdEditPost.Parameters.AddWithValue("@ImgURL", imgURL ?? (object)DBNull.Value); // Handle no image case
+                    cmdEditPost.Parameters.AddWithValue("@PostImageURL", imageURL ?? (object)DBNull.Value); // Handle no image case
 
                     int rowsAffected = cmdEditPost.ExecuteNonQuery();
 
@@ -238,34 +244,34 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
 
                 List<object> commentsList = new List<object>();
 
-                
-                    conn.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("usp_GetCommentsByPost", conn))
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand("usp_GetCommentsByPost", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    //cmd.Parameters.AddWithValue("@UserID", userId);
+                    cmd.Parameters.AddWithValue("@PostID", postId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        //cmd.Parameters.AddWithValue("@UserID", userId);
-                        cmd.Parameters.AddWithValue("@PostID", postId);
-
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            commentsList.Add(new
                             {
-                                commentsList.Add(new
-                                {
-                                    CommentID = reader["CommentID"],
-                                    UserID = reader["UserID"],
-                                    PostID = reader["PostID"],
-                                    CommentText = reader["CommentText"],
-                                    CommentedOn = Convert.ToDateTime(reader["CommentedOn"]).ToString("yyyy-MM-dd HH:mm:ss"),
-                                    FirstName = reader["FirstName"],
-                                    LastName = reader["LastName"],
-                                    UserImage = reader["UserImage"]
-                                });
-                            }
+                                CommentID = reader["CommentID"],
+                                UserID = reader["UserID"],
+                                PostID = reader["PostID"],
+                                CommentText = reader["CommentText"],
+                                CommentedOn = Convert.ToDateTime(reader["CommentedOn"]).ToString("yyyy-MM-dd HH:mm:ss"),
+                                FirstName = reader["FirstName"],
+                                LastName = reader["LastName"],
+                                UserImageURL = reader["UserImageURL"]
+                            });
                         }
                     }
-                
+                }
+
 
                 return Json(new { success = true, comments = commentsList }, JsonRequestBehavior.AllowGet);
             }
@@ -301,28 +307,28 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
                     return Json(new { success = false, message = "Invalid input parameters." }, JsonRequestBehavior.AllowGet);
                 }
 
-               
-                    conn.Open();
 
-                    using (SqlCommand cmd = new SqlCommand("usp_DeleteCommentOnPost", conn))
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand("usp_DeleteCommentOnPost", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserID", userID);
+                    cmd.Parameters.AddWithValue("@PostID", postID);
+                    cmd.Parameters.AddWithValue("@CommentID", commentID);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected < 0)
                     {
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@UserID", userID);
-                        cmd.Parameters.AddWithValue("@PostID", postID);
-                        cmd.Parameters.AddWithValue("@CommentID", commentID);
-
-                        int rowsAffected = cmd.ExecuteNonQuery();
-
-                        if (rowsAffected < 0)
-                        {
-                            return Json(new { success = true, message = "Comment deleted successfully." }, JsonRequestBehavior.AllowGet);
-                        }
-                        else
-                        {
-                            return Json(new { success = false, message = "No comment deleted. Ensure you have permission." }, JsonRequestBehavior.AllowGet);
-                        }
+                        return Json(new { success = true, message = "Comment deleted successfully." }, JsonRequestBehavior.AllowGet);
                     }
-                
+                    else
+                    {
+                        return Json(new { success = false, message = "No comment deleted. Ensure you have permission." }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -334,6 +340,6 @@ namespace Blog_Posting_WebApplication.Controllers.UploadPost
             }
         }
 
-       
+
     }
 }

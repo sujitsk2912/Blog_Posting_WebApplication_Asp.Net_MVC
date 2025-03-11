@@ -3,184 +3,370 @@
 }
 
 
-    <style>
-        body {
-            background-color: #000 !important;
+<style>
+    body {
+        background-color: #000 !important;
+        color: #fff;
+    }
+
+    .container {
+        max-width: 1120px;
+    }
+
+    .profile-header {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .profile-image {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 30px;
+        border: 3px solid #007bff;
+    }
+
+    .profile-info {
+        flex-grow: 1;
+    }
+
+    .stats {
+        display: flex;
+        gap: 20px;
+    }
+
+    .btn-follow {
+        margin-right: 10px;
+    }
+
+    .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 10px;
+        padding: 20px;
+        place-items:center;
+    }
+
+    .post-item {
+        align-items: stretch;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+        .post-item img {
+            width: 254px;
+            height: 320px;
+            ;
+            /*        border-radius: 10px;
+        border: 2px solid #007bff;*/
+        }
+
+    h2, .stats span {
+        text-shadow: 0 0 10px #007bff;
+        white-space: nowrap;
+    }
+
+    .btn-outline-light {
+        border-color: #007bff;
+        color: #007bff;
+    }
+
+        .btn-outline-light:hover {
+            background-color: #007bff;
             color: #fff;
         }
 
-        .profile-header {
+    .not-found-title {
+        line-height: 32px;
+        font-size: 26px;
+        font-weight: 600;
+        word-break: break-word;
+        white-space: pre-line;
+        word-wrap: break-word;
+    }
+
+    .not-found-message {
+        line-height: 28px;
+        font-weight: 400;
+        font-size: 18px;
+        word-wrap: break-word;
+        white-space: pre-line;
+        word-break: break-word;
+    }
+
+            .stats {
+           margin:30px 0;
+        }
+    .stats ul {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+        flex-direction: row;
+/*        margin-bottom: 20px;*/
+    }
+
+        .stats ul li {
+            margin-right: 40px;
             display: flex;
-            align-items: center;
-            padding: 20px;
+            gap: 5px;
+            font-size:18px !important;
+            text-shadow: none !important;
+            font-size: 1.10rem !important;
         }
-
-        .profile-image {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 20px;
-            border: 3px solid #007bff;
-        }
-
-        .profile-info {
-            flex-grow: 1;
-        }
-
-        .stats {
-            display: flex;
-            gap: 20px;
-        }
-
-        .btn-follow {
-            margin-right: 10px;
-        }
-
-        .posts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 10px;
-            padding: 20px;
-        }
-
-        .post-item img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            border: 2px solid #007bff;
-        }
-
-        h2, .stats span {
-            text-shadow: 0 0 10px #007bff;
-        }
-
-        .btn-outline-light {
-            border-color: #007bff;
-            color: #007bff;
-        }
-
-            .btn-outline-light:hover {
-                background-color: #007bff;
-                color: #fff;
+            .stats ul > li > h5 {
+                font-size: 18px !important;
+                margin:0 !important;
             }
-        .not-found-title {
-            line-height: 32px;
-            font-size: 26px;
-            font-weight: 600;
-            word-break: break-word;
-            white-space: pre-line;
-            word-wrap: break-word;
+
+                .stats span {
+                    font-size: 16px !important;
+                    color: #a8a8a8;
+                    text-shadow: none !important;
+                    margin-top: -1px;
+                }
+
+    .nav-link {
+        border: none !important;
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0.375rem;
+        border-bottom-left-radius: 0.375rem;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: #fff !important;
+        background-color: transparent !important;
+        border-color: none !important;
+    }
+    .nav-link:focus, .nav-link:hover{
+/*        color:#fff !important;*/
+    }
+    .nav-tabs {
+        border: none !important;
+        place-content: center;
+        margin: 10px;
+    }
+
+    .nav-item {
+        margin-left: 40px;
+    }
+    .nav-tabs a {
+        color: #a8a8a8;
+        text-transform: uppercase;
+        cursor: pointer;
+        font-weight: 600;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+        .nav-tabs a i {
+            margin-right: 6px;
         }
-        .not-found-message {
-            line-height: 28px;
-            font-weight: 400;
-            font-size: 18px;
-            word-wrap: break-word;
-            white-space: pre-line;
-            word-break: break-word;
-        }
-    </style>
+
+    button:hover {
+        background-color: #262626 !important;
+    }
+</style>
 
 
 <main>
 
     <div class="container" style="min-height:80vh;">
+
+
+
+
+        <!-- post action model loaded here -->
+
+        <div class="modal fade" id="profileActionsModal" tabindex="-1" aria-labelledby="profileActionsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" style="max-width:500px !important">
+                <div class="modal-content">
+                    <div class="modal-body" id="profileActionsContent">
+                        <a href="javascript:void(0)" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
+                            <i class="fa-solid fa-edit me-2 text-primary"></i> Edit Post
+                        </a>
+                        <a href="javascript:void(0)" class="text-decoration-none text-danger fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
+                            <i class="fa-solid fa-trash-alt me-2"></i> Delete Post
+                        </a>
+                        <a href="javascript:void(0)" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
+                            <i class="fa-solid fa-share me-2 text-primary"></i> Share
+                        </a>
+                        <a href="javascript:void(0)" class="text-decoration-none text-dark fw-semibold d-flex align-items-center border-bottom" style="padding:10px 0;">
+                            <i class="fa-solid fa-link me-2 text-primary"></i> Copy Link
+                        </a>
+                        <a href="javascript:void(0)" class="text-decoration-none text-secondary fw-semibold d-flex align-items-center" data-bs-dismiss="modal" aria-label="Close" style="padding:10px 0;">
+                            <i class="fa-solid fa-close me-2"></i> Cancel
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--end  post action model loaded here -->
         <!-- Profile Header -->
-        <div class="profile-header">
+        <section class="profile-header">
             <img id="profileImage" src="https://picsum.photos/120/120?random=1" alt="Profile Image" class="profile-image">
             <div class="profile-info">
-                <h2 id="fullName" class="fw-bold">Loading...</h2>
-                <div class="stats">
-                    <span><strong id="postsCount">0</strong> posts</span>
-                    <span><strong id="followers">0</strong> followers</span>
-                    <span><strong id="following">0</strong> following</span>
+                <div style="display: flex; min-width: 0; gap: 30px; flex-shrink: 1;  margin-bottom: 20px; word-wrap: break-word; white-space: nowrap; ">
+                    <div class="" style=" padding-top: 30px; ">
+                        <h4 id="fullName" class="fw-semibold m-0">Loading...</h4>
+                        <small id="username" class="" style=" font-size: 16px;color:gray; font-weight: 400 !important;">Loading...</small>
+                    </div>
+                    <div style=" display: flex; gap: 10px; align-items: center;">
+                        <button class="" id="btneditProfile" style="background-color: #363636; display:flex;align-items:center; height: 32px;border:none;
+         outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; text-align: center ">
+                            <a href="#" style="font-size: .875rem; padding:0; margin: 0; text-align: center; text-decoration: none; font-weight: 500; color: #fff">Edit Profile</a>
+                        </button>
+                        <button class="" id="btnFollow" style="background-color: #363636; display:flex;align-items:center; height: 32px;border:none;
+         outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; text-align: center ">
+                            <a href="#" style="font-size: .875rem; padding:0; margin: 0; text-align: center; text-decoration: none; font-weight: 500; color: #fff">Following</a>
+                        </button>
+                        <button class="" id="btnMessage" style="background-color: #363636; display:flex;align-items:center; height: 32px;border:none;
+outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; text-align: center ">
+                            <a href="#" style="font-size: .875rem; padding:0; margin: 0; text-align: center; text-decoration: none; font-weight: 500; color: #fff">Message</a>
+                        </button>
+                        <span>
+                            <i class="bi bi-three-dots"
+                               data-bs-toggle="modal"
+                               data-bs-target="#profileActionsModal"
+                               @*data-post-id="${post.PostID || ''}"
+        data-post-user-id="${post.UserID || ''}"*@
+                               style="cursor:pointer"></i>
+                        </span>
+                    </div>
+                   
                 </div>
-                <button class="btn btn-outline-light btn-follow">Following</button>
-                <button class="btn btn-outline-light">Message</button>
+                <section class="stats">
+                    <ul>
+                        <li>
+                            <h5 id="postsCount">0</h5><span> posts</span>
+                        </li>
+                        <li>
+                            <h5 id="followers">0</h5> <span>followers</span>
+
+                        </li>
+                        <li>
+                            <h5 id="following">0</h5> <span>following</span>
+
+                        </li>
+                    </ul>
+                </section>
+
+                <section class="bio" style="max-width: 500px; margin:15px 0">
+                    <div style="width: 100%; word-wrap: break-word;">
+                        <p style="font-size: 14px; font-weight: 400; margin: 0; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+                            _______________________________________________________
+                            - 𝙓𝙓𝙄𝙓•𝙓𝙄𝙄 ✨
+                            - 𝙏𝙝𝙞𝙣𝙜𝙨 𝙚𝙣𝙙 𝙩𝙤 𝙗𝙚𝙜𝙞𝙣 𝙖𝙜𝙖𝙞𝙣.🍁
+                        </p>
+                    </div>
+                </section>
+
             </div>
-        </div>
+        </section>
 
         <!-- Posts Section -->
-        <div class="posts-grid">
-            <div class="post-item">
-                <img src="https://picsum.photos/300/300?random=2" alt="Post 1">
+        <section>
+            <div style=" border-top: 0.2px solid #a8a8a861;">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"><i class="bi bi-grid-3x3"></i>POSTS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-camera-reels"></i>REELS</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-person-badge"></i>TAGGED</a>
+                    </li>
+                </ul>
             </div>
-            <div class="post-item">
-                <img src="https://picsum.photos/300/300?random=3" alt="Post 2">
+            <div class="posts-grid">
+                <div class="post-item">
+                    <img src="https://picsum.photos/300/300?random=2" alt="Post 1">
+                </div>
+                <div class="post-item">
+                    <img src="https://picsum.photos/300/300?random=3" alt="Post 2">
+                </div>
+                <div class="post-item">
+                    <img src="https://picsum.photos/300/300?random=4" alt="Post 3">
+                </div>
+                <div class="post-item">
+                    <img src="https://picsum.photos/300/300?random=5" alt="Post 4">
+                </div>
+                <div class="post-item">
+                    <img src="https://picsum.photos/300/300?random=6" alt="Post 5">
+                </div>
+                <div class="post-item">
+                    <img src="https://picsum.photos/300/300?random=7" alt="Post 6">
+                </div>
             </div>
-            <div class="post-item">
-                <img src="https://picsum.photos/300/300?random=4" alt="Post 3">
-            </div>
-            <div class="post-item">
-                <img src="https://picsum.photos/300/300?random=5" alt="Post 4">
-            </div>
-            <div class="post-item">
-                <img src="https://picsum.photos/300/300?random=6" alt="Post 5">
-            </div>
-            <div class="post-item">
-                <img src="https://picsum.photos/300/300?random=7" alt="Post 6">
-            </div>
-        </div>
+        </section>
 
         <!-- Not Found Section -->
-        <div id="notFoundContainer" class="not-found-container" style="display: none;text-align:center">
+        <section id="notFoundContainer" class="not-found-container" style="display: none;text-align:center">
             <span class="not-found-title">Sorry, this page isn't available.</span>
             <div class="not-found-message">
                 The link you followed may be broken, or the page may have been removed.
                 <a href="/Home" class="not-found-button text-decoration-none">Go back to Instagram</a>
             </div>
-        </div>
+        </section>
 
     </div>
-    
+
 </main>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Get the userId from the query string
-            const urlParams = new URLSearchParams(window.location.search);
-            const userId = urlParams.get('userId');
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Get the userId from the query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('userId');
 
-            if (userId) {
-                // Fetch user profile data using AJAX
-                $.ajax({
-                    url: '/UserProfile/UserProfile',
-                    type: 'POST',
-                    data: { userId: userId },
-                    success: function (response) {
-                        if (response.success) {
-                            const user = response.user;
+        if (userId) {
+            // Fetch user profile data using AJAX
+            $.ajax({
+                url: '/UserProfile/UserProfile',
+                type: 'POST',
+                data: { userId: userId },
+                success: function (response) {
+                    if (response.success) {
+                        const user = response.user;
 
-                            // Update the profile header
-                            $('#profileImage').attr('src', user.UserImage || 'https://picsum.photos/120/120?random=1');
-                            $('#fullName').text(`${user.FirstName} ${user.LastName}`);
-                            $('#postsCount').text(user.PostsCount);
-                            $('#followers').text(user.Followers);
-                            $('#following').text(user.Following);
-                        } else {
-                            // Show "Page Not Found" message
-                            $('#notFoundContainer').show();
-                            $('.profile-header').hide();
-                            $('.posts-grid').hide();
+                        // Update the profile header
+                        $('#profileImage').attr('src', user.UserImageURL || 'https://picsum.photos/120/120?random=1');
+                        $('#fullName').text(`${user.FirstName} ${user.LastName}`);
+                        $('#username').text(`${user.Username}`);
+                        $('#postsCount').text(user.PostsCount);
+                        $('#followers').text(user.Followers);
+                        $('#following').text(user.Following);
+                    } else {
+                        // Show "Page Not Found" message
+                        $('#notFoundContainer').show();
+                        $('.profile-header').hide();
+                        $('.posts-grid').hide();
 
-                            // Apply CSS to the container
-                            $('.container').css({
-                                'place-content': 'center',
-                            });
+                        // Apply CSS to the container
+                        $('.container').css({
+                            'place-content': 'center',
+                        });
 
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error fetching user profile:", error);
-                        alert('Error fetching user profile.');
                     }
-                });
-            } else {
-                alert('User ID not found in the URL.');
-            }
-        });
-    </script>
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching user profile:", error);
+                    alert('Error fetching user profile.');
+                }
+            });
+        } else {
+            alert('User ID not found in the URL.');
+        }
+    });
+</script>
 
 

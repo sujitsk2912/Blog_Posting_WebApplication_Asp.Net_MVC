@@ -26,6 +26,7 @@ WHERE
 
 -----------------------------------------------------------------------------
 
+
 CREATE TABLE UserDetails
 (
 UserID INT PRIMARY KEY IDENTITY(100,1) NOT NULL,
@@ -36,7 +37,7 @@ DateOfBirth DATETIME NOT NULL,
 Gender VARCHAR(20) NOT NULL,
 Mobile NVARCHAR(20) NULL UNIQUE,
 Email NVARCHAR(50) NULL UNIQUE,
-UserImage NVARCHAR(MAX) NULL,
+UserImageURL VARBINARY(MAX) NULL,
 CreatedAt DATETIME NOT NULL,
 IsActive BIT NOT NULL
 );
@@ -175,11 +176,12 @@ CREATE TABLE PostUploadContent
 
 --------------------------------------------------------------
 
+
 CREATE TABLE postImageContainer
 (
     PostID INT PRIMARY KEY NOT NULL,
     UserID INT NOT NULL,
-    imgURL NVARCHAR(MAX) NULL,
+    PostImageURL VARBINARY(MAX) NULL,
 
     -- Ensure PostID exists in UploadPost and cascade delete
     CONSTRAINT FK_ImgContents FOREIGN KEY (PostID) 
@@ -190,13 +192,15 @@ CREATE TABLE postImageContainer
     REFERENCES UserDetails(UserID)
 );
 
+select * from postImageContainer
+
 ---------------------------------------------------------------------
 
 CREATE OR ALTER PROCEDURE usp_InsertPostData
     @UserID INT,
     @PostedOn DATETIME,
     @PostContent NVARCHAR(MAX) = NULL,
-    @imgURL NVARCHAR(MAX) = NULL
+    @PostImageURL VARBINARY(MAX) = NULL
 AS
 BEGIN
     -- Declare a variable to store the newly generated PostID
@@ -217,8 +221,8 @@ BEGIN
     VALUES (@NewPostID, @UserID, @PostContent);
 
     -- Insert into postImageContainer table
-    INSERT INTO postImageContainer (PostID, UserID, imgURL)
-    VALUES (@NewPostID, @UserID, @imgURL);
+    INSERT INTO postImageContainer (PostID, UserID, PostImageURL)
+    VALUES (@NewPostID, @UserID, @PostImageURL);
 
     -- Commit the transaction
     COMMIT TRANSACTION;
@@ -240,12 +244,12 @@ BEGIN
         UD.FirstName,
         UD.LastName,
         UD.Username,
-        UD.UserImage,
+        UD.UserImageURL,
         UP.PostID,
         UP.UserID,
         UP.PostedOn,
         PUC.PostContent,
-        PIC.imgURL
+        PIC.PostImageURL
     FROM 
         UploadPost UP
     LEFT JOIN 
@@ -265,7 +269,7 @@ CREATE OR ALTER PROCEDURE usp_EditPost
     @UserID INT,
     @PostID INT,
     @PostContent NVARCHAR(MAX),
-    @ImgURL NVARCHAR(500)
+    @PostImageURL VARBINARY(MAX)
 AS
 BEGIN
     BEGIN TRY
@@ -286,13 +290,13 @@ BEGIN
         IF EXISTS (SELECT 1 FROM postImageContainer WHERE PostID = @PostID)
         BEGIN
             UPDATE postImageContainer
-            SET imgURL = @ImgURL
+            SET PostImageURL = @PostImageURL
             WHERE PostID = @PostID;
         END
         ELSE
         BEGIN
-            INSERT INTO postImageContainer (PostID, imgURL)
-            VALUES (@PostID, @ImgURL);
+            INSERT INTO postImageContainer (PostID, PostImageURL)
+            VALUES (@PostID, @PostImageURL);
         END;
 
         COMMIT TRANSACTION;
@@ -415,7 +419,7 @@ BEGIN
         PC.CommentedOn,
         UD.FirstName,
         UD.LastName,
-        UD.UserImage
+        UD.UserImageURL
     FROM 
         PostComments PC
     INNER JOIN 
@@ -598,7 +602,7 @@ BEGIN
         UD.Gender, 
         UD.Mobile, 
         UD.Email, 
-        UD.UserImage, 
+        UD.UserImageURL, 
         UD.CreatedAt, 
         UD.IsActive,
         UP.BioData, 
@@ -625,7 +629,7 @@ BEGIN
     SET @SearchTerm = LTRIM(RTRIM(@SearchTerm));
 
     -- Search for records where FirstName or LastName contains the search term
-    SELECT UserID, FirstName, LastName, Username, UserImage
+    SELECT UserID, FirstName, LastName, Username, UserImageURL
     FROM UserDetails
     WHERE FirstName LIKE '%' + @SearchTerm + '%'
        OR LastName LIKE '%' + @SearchTerm + '%'

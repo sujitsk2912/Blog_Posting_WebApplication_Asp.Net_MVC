@@ -70,6 +70,13 @@ namespace Blog_Posting_WebApplication.Controllers
 
                 while (reader.Read())
                 {
+                    // Convert binary image data to base64 string (if it exists)
+                    byte[] postImageData = reader["PostImageURL"] as byte[];
+                    string postImageBase64 = postImageData != null ? Convert.ToBase64String(postImageData) : null;
+
+                    byte[] userImageData = reader["UserImageURL"] as byte[];
+                    string userImageBase64 = userImageData != null ? Convert.ToBase64String(userImageData) : null;
+
                     posts.Add(new
                     {
                         PostID = reader["PostID"],
@@ -78,8 +85,8 @@ namespace Blog_Posting_WebApplication.Controllers
                         LastName = reader["LastName"],
                         PostedOn = Convert.ToDateTime(reader["PostedOn"]).ToString("yyyy-MM-ddTHH:mm:ss"),
                         PostContent = reader["PostContent"] == DBNull.Value ? null : reader["PostContent"],
-                        imgURL = reader["imgURL"] == DBNull.Value ? null : reader["imgURL"],
-                        UserImage = reader["UserImage"] == DBNull.Value ? null : reader["UserImage"]
+                        PostImageURL = postImageBase64 != null ? $"data:image/jpeg;base64,{postImageBase64}" : null, // Base64 image string
+                        UserImageURL = userImageBase64 != null ? $"data:image/jpeg;base64,{userImageBase64}" : null // Base64 image string
                     });
                 }
                 return Json(posts, JsonRequestBehavior.AllowGet);
@@ -94,6 +101,10 @@ namespace Blog_Posting_WebApplication.Controllers
                 conn.Close();
             }
         }
+
+
+
+
 
         [HttpGet]
         public ActionResult About()
