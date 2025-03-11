@@ -31,7 +31,44 @@
     .profile-info {
         flex-grow: 1;
     }
+        .profile-info div button {
+            background-color: #363636;
+            display:flex; 
+            align-items:center; 
+            height: 32px;
+            border:none;
+            outline:none;
+            border-radius: 8px;
+            margin: 0;
+            cursor: pointer;
+            padding: 10px 16px;
+            text-align: center ;
+        }
+        .profile-info button a {
+            font-size: .875rem; 
+            padding:0;
+            margin: 0; 
+            text-align: center; 
+            text-decoration: none;
+            font-weight: 500;
+            color: #fff;
+        }
 
+        .profile-info .info1 {
+            display: flex; 
+            min-width: 0; 
+            gap: 30px;
+            flex-shrink: 1;
+            margin-bottom: 20px; 
+            word-wrap: break-word; 
+            white-space: nowrap;
+        }
+
+        .profile-info small {
+            font-size: 16px;
+            color:gray;
+            font-weight: 400 !important;
+        }
     .stats {
         display: flex;
         gap: 20px;
@@ -119,6 +156,14 @@
             text-shadow: none !important;
             font-size: 1.10rem !important;
         }
+
+    .bio div p {
+        font-size: 14px; 
+        font-weight: 400;
+        margin: 0; 
+        line-height: 18px; 
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
             .stats ul > li > h5 {
                 font-size: 18px !important;
                 margin:0 !important;
@@ -223,25 +268,22 @@
 
         <!-- Profile Header -->
         <section class="profile-header">
-            <img  data-bs-toggle="modal" data-bs-target="#changePhotoModal" id="profileImage" src="https://picsum.photos/120/120?random=1" alt="Profile Image" class="profile-image">
+            <img  data-bs-toggle="modal" data-bs-target="#changePhotoModal" id="profileImage" style="cursor:pointer" src="https://picsum.photos/120/120?random=1" alt="Profile Image" class="profile-image">
             <div class="profile-info">
-                <div style="display: flex; min-width: 0; gap: 30px; flex-shrink: 1;  margin-bottom: 20px; word-wrap: break-word; white-space: nowrap; ">
+                <div class="info1">
                     <div class="" style=" padding-top: 30px; ">
                         <h4 id="fullName" class="fw-semibold m-0">Loading...</h4>
-                        <small id="username" class="" style=" font-size: 16px;color:gray; font-weight: 400 !important;">Loading...</small>
+                        <small id="username" class="" >Loading...</small>
                     </div>
-                    <div style=" display: flex; gap: 10px; align-items: center;">
-                        <button class="" id="btneditProfile" style="background-color: #363636; display:flex;align-items:center; height: 32px;border:none;
-         outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; text-align: center ">
-                            <a href="#" style="font-size: .875rem; padding:0; margin: 0; text-align: center; text-decoration: none; font-weight: 500; color: #fff">Edit Profile</a>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button class="" id="btneditProfile" >
+                            <a href="#">Edit Profile</a>
                         </button>
-                        <button class="" id="btnFollow" style="background-color: #363636; display:flex;align-items:center; height: 32px;border:none;
-         outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; text-align: center ">
-                            <a href="#" style="font-size: .875rem; padding:0; margin: 0; text-align: center; text-decoration: none; font-weight: 500; color: #fff">Following</a>
+                        <button class="" id="btnFollow" >
+                            <a href="#">Following</a>
                         </button>
-                        <button class="" id="btnMessage" style="background-color: #363636; display:flex;align-items:center; height: 32px;border:none;
-outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; text-align: center ">
-                            <a href="#" style="font-size: .875rem; padding:0; margin: 0; text-align: center; text-decoration: none; font-weight: 500; color: #fff">Message</a>
+                        <button class="" id="btnMessage" >
+                            <a href="#">Message</a>
                         </button>
                         <span>
                             <i class="bi bi-three-dots"
@@ -272,7 +314,7 @@ outline:none; border-radius: 8px;margin:0; cursor: pointer;padding:10px 16px; te
 
                 <section class="bio" style="max-width: 500px; margin:15px 0">
                     <div style="width: 100%; word-wrap: break-word;">
-                        <p style="font-size: 14px; font-weight: 400; margin: 0; line-height: 18px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+                        <p >
                             _______________________________________________________
                             - 𝙓𝙓𝙄𝙓•𝙓𝙄𝙄 ✨
                             - 𝙏𝙝𝙞𝙣𝙜𝙨 𝙚𝙣𝙙 𝙩𝙤 𝙗𝙚𝙜𝙞𝙣 𝙖𝙜𝙖𝙞𝙣.🍁

@@ -228,8 +228,8 @@
         <div class="card mb-4">
             <div class="card-body">
                 <div class="d-flex align-items-center mb-3">
-                    <img id="getUserImage" src="${post.UserImageURL ? post.UserImageURL : '/Assets/Images/user (13).png'}"
-                         style="height:3rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
+                    <img id="getUserImage"  onclick="getUserProfile(${post.UserID})" src="${post.UserImageURL ? post.UserImageURL : '/Assets/Images/user (13).png'}"
+                         style="height:3rem;width:auto;cursor:pointer" class="rounded-circle me-3" alt="User Avatar">
                     <div style="display: flex;justify-content: space-between;align-items: self-start;width: 100%;">
                         <div>
                            <h6 id="getUsername" onclick="getUserProfile(${post.UserID})" style="cursor:pointer"  class="mb-0">${post.FirstName || ''} ${post.LastName || ''}</h6>
@@ -327,7 +327,7 @@
                                   </span>
                                   </div>
                             </div>
-                            <div class="modal-body" style="overflow-y: auto;  scrollbar-width: none; max-height: 68vh;padding:20px;"> <!-- Make modal body scrollable -->
+                            <div class="modal-body" style="overflow-y: auto; display:block;  scrollbar-width: none; max-height:71vh;padding:20px;"> <!-- Make modal body scrollable -->
                                 ${post.PostContent ? `
                                     <div style="padding:10px 15px">
                                         <div style="display:flex;">
@@ -350,7 +350,7 @@
                                 <div class="container d-flex align-items-center">
                                     <img src="/Assets/Images/user (13).png" style="height: 2rem; width: auto;" class="rounded-circle me-3" alt="User Avatar">
                                     <textarea id="postCommentBox${post.PostID}" class="form-control container postCommentBox" name="comment" rows="2" placeholder="Add a comment" style="background:transparent;color:#fff; border:none;outline:none;padding:0"></textarea>
-                                    <button type="button" id="submitComment${post.PostID}" class="btn btn-primary ms-2 submitCommentBtn" style="border-radius:20px">Post</button>
+                                    <button type="button" id="submitComment${post.PostID}" class="btn btn-primary ms-2 submitCommentBtn" style="border-radius:20px" disabled>Post</button>
                                 </div>
                             </div>
                         </div>
@@ -442,7 +442,7 @@
     function togglePostButton() {
         const content = $('#postContent').val().trim();
         const hasImage = $('#photo-upload')[0].files.length > 0;
-        $('#submitPost').prop('disabled', !content && !hasImage);
+        $('#submitPost').prop('disabled', !hasImage);
     }
 
     // Image Preview Function with FontAwesome Remove Icon
@@ -674,6 +674,20 @@ $(document).ready(function () {
 
 <script>
 
+    // Enable/Disable Submit Button Based on Textarea Content
+    function toggleCommentButton() {
+        $('.postCommentBox').each(function () {
+            const commentContent = $(this).val().trim();
+            // Find the corresponding submit button next to the textarea
+            $(this).next('.submitCommentBtn').prop('disabled', commentContent === '');
+        });
+    }
+
+    $(document).ready(function () {
+        // Attach event listener to all current and future textareas
+        $(document).on('input change', '.postCommentBox', toggleCommentButton);
+    });
+
     // @*Script for Uploading Comments on a Particular Post*@
     $(document).on('click', '[id^="submitComment"]', function () {
         const postId = $(this).attr('id').replace('submitComment', '');
@@ -715,9 +729,9 @@ $(document).ready(function () {
                 if (response.success) {
                     showToast('Comment posted successfully!', 'success');
                     commentBox.val('');
-
                     // Call loadCommentsInModal to refresh comments
                     loadCommentsInModal(postUserId, postId);
+                    toggleCommentButton();
                 } else {
                     showToast('Error: ' + response.message, 'error');
                 }
@@ -862,12 +876,12 @@ $(document).ready(function () {
             actionsHtml = `
 
                    <button type="button" class="text-primary" style="border: 0 !important;">Edit Comment</button>
-                   <button type="button" id="deleteCommentBtn" class="text-danger closeAllModals">Delete Comment</button>
+                   <button type="button" id="deleteCommentBtn" data-bs-dismiss="modal" aria-label="Close" class="text-danger closeAllModals">Delete Comment</button>
 
                    `;
         } else {
             actionsHtml = `
-                   <button type="button" class="text-danger">Report Comment</button>
+                   <button type="button" data-bs-dismiss="modal" aria-label="Close" class="text-danger">Report Comment</button>
 `;
         }
 
