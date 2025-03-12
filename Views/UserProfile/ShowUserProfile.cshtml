@@ -108,7 +108,7 @@
         }
 
     h2, .stats span {
-        text-shadow: 0 0 10px #007bff;
+/*        text-shadow: 0 0 10px #007bff;*/
         white-space: nowrap;
     }
 
@@ -363,9 +363,9 @@
                 <!-- Posts will be dynamically inserted here -->
             </div>
 
-            <div style=" width: 100%; text-align: center; height: 250px; display: flex; justify-content: center; align-items: center;">
+            @*<div style=" width: 100%; text-align: center; height: 250px; display: flex; justify-content: center; align-items: center;">
                 <p style="place-content: center;">No Posts Available</p>
-            </div>
+            </div>*@
 
         </section>
 
@@ -439,34 +439,44 @@
 @* Script for loading posts dynamically *@
 <script>
     $(document).ready(function () {
-        // Parse the posts data from ViewBag
-        var posts = JSON.parse('@Html.Raw(ViewBag.Posts)');
-        var Data = posts.Data;
+        try {
+            // Parse the posts data from ViewBag (handles empty/null cases)
+            var posts = JSON.parse('@Html.Raw(ViewBag.Posts)') || {};
+            var Data = posts.Data;
 
-        // Check if posts data is available
-        if (Data) {
+            // Select the posts container
             var postsContainer = $('#posts-container');
             postsContainer.empty(); // Clear any existing content
 
-            // Loop through each post and append it to the container
-            $.each(Data, function (index, item) {
-                var postHtml = `
-                    <div class="post-item" style="     display: block;
-    width: 100%;
-    position: relative;   height: fit-content;display: block;overflow: hidden;position: relative;">
-                        <img  src="${item.PostImageURL}" alt="Post Image" style="cursor:pointer;user-select: none;object-fit: cover;">
+            // Check if Data is a valid array and has items
+            if (Array.isArray(Data) && Data.length > 0) {
+                console.log(Data);
 
+                // Loop through each post and append it to the container
+                $.each(Data, function (index, item) {
+                    var postHtml = `
+                        <div class="post-item" style="display: block; width: 100%; position: relative; height: fit-content; overflow: hidden;">
+                            <img src="${item.PostImageURL}" alt="Post Image" style="cursor:pointer; user-select: none; object-fit: cover;">
                         </div>
-                `;
-                postsContainer.append(postHtml);
-            });
-        } else {
-            // Display a message if no posts are available
-            $('#posts-container').html('<p>No posts available.</p>');
+                    `;
+                    postsContainer.append(postHtml);
+                });
+            } else {
+                // Display a message if no posts are available
+                postsContainer.html(`<div style="width: 100%; text-align: center; height: 250px; display: flex; justify-content: center; align-items: center;">
+                    <p style="place-content: center;">No Posts Available</p>
+                </div>`);
+            }
+        } catch (error) {
+            console.error("Error parsing posts data: ", error);
+            $('#posts-container').html(`<div style="width: 100%; text-align: center; height: 250px; display: flex; justify-content: center; align-items: center;">
+                    <p style="place-content: center;">No Posts Available</p>
+                </div>`);
         }
     });
 </script>
 @* End of script for loading posts dynamically *@
+
 
 
 

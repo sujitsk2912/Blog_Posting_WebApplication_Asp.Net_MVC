@@ -244,6 +244,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UploadPost\UploadPostController.cs" />
     <Compile Include="Controllers\UserProfile\UserProfileController.cs" />
+    <Compile Include="CustomAuthorizeAttribute.cs" />
     <Compile Include="DbConnection.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

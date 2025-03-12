@@ -41,7 +41,6 @@ namespace Blog_Posting_WebApplication.Controllers.UserProfile
         }
 
         [HttpGet]
-        //[AllowAnonymous] // Allow anonymous access to this action
         public JsonResult GetPosts(int userId)
         {
             try
