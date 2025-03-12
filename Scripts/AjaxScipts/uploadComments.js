@@ -1,42 +1,52 @@
-﻿// @*Script for Uploading Comments on a Particular Post*@
-
-$(document).on('click', '[id^=submitComment]', function () {
-    const postId = $(this).closest('.modal').data('post-id');
-    const userId = $(this).closest('.modal').data('post-user-id');
-    const commentText = $(`#postCommentBox${postId}`).val().trim();
-
-    if (!commentText) {
-        alert('Please enter a comment.');
-        return;
+﻿// uploadComments.js
+$(document).ready(function () {
+    function toggleCommentButton() {
+        $('.postCommentBox').each(function () {
+            const commentContent = $(this).val().trim();
+            $(this).next('.submitCommentBtn').prop('disabled', commentContent === '');
+        });
     }
 
-    $.ajax({
-        url: '/UploadPost/AddCommentOnPost',
-        type: 'POST',
-        data: {
-            userId: userId,
-            postId: postId,
-            PostComment: commentText
-        },
-        success: function (response) {
-            if (response.success) {
-                $(`#postCommentBox${postId}`).val('');
-                const newComment = `
-                    <div style="padding:10px 20px">
-                        <div style="display:flex;">
-                            <img src="/Assets/Images/user (13).png" style="height:2rem;width:auto" class="rounded-circle me-3" alt="User Avatar">
-                            <h6 class="modal-title">${response.commenterName || 'User'}</h6>
-                        </div>
-                        <p style="padding-left:50px">${commentText}</p>
-                    </div>
-                `;
-                $(`#commentsContainer${postId}`).append(newComment);
-            } else {
-                alert('Failed to add comment: ' + response.message);
-            }
-        },
-        error: function (xhr, status, error) {
-            alert('Error: ' + error);
+    $(document).on('input change', '.postCommentBox', toggleCommentButton);
+
+    $(document).on('click', '[id^="submitComment"]', function () {
+        const postId = $(this).attr('id').replace('submitComment', '');
+        const commentBox = $(`#postCommentBox${postId}`);
+        const commentContent = commentBox.val().trim();
+
+        if (!commentContent) {
+            showToast('Comment cannot be empty.', 'warning');
+            return;
         }
+
+        const postUserId = @ViewBag.UserId;
+
+        if (!postUserId) {
+            showToast('Error: User information is missing.', 'error');
+            return;
+        }
+
+        $.ajax({
+            url: '/UploadPost/AddCommentOnPost',
+            type: 'POST',
+            data: {
+                userId: postUserId,
+                postId: postId,
+                PostComment: commentContent
+            },
+            success: function (response) {
+                if (response.success) {
+                    showToast('Comment posted successfully!', 'success');
+                    commentBox.val('');
+                    loadCommentsInModal(postUserId, postId);
+                    toggleCommentButton();
+                } else {
+                    showToast('Error: ' + response.message, 'error');
+                }
+            },
+            error: function (xhr, status, error) {
+                showToast('Error posting comment. Please try again.', 'error');
+            }
+        });
     });
 });

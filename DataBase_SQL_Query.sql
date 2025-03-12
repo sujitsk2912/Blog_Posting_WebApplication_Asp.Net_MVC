@@ -194,7 +194,7 @@ CREATE TABLE postImageContainer
 
 select * from postImageContainer
 
-delete postImageContainer where PostID = 3019 and UserID = 101
+delete postImageContainer where PostID = 3020 and UserID = 101
 
 ---------------------------------------------------------------------
 

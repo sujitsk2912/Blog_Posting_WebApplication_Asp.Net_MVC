@@ -1,59 +1,73 @@
-﻿// @*Script for Uploading Posts*@
-
+﻿// uploadPost.js
 $(document).ready(function () {
-    const $postButton = $('#submitPost'); // Post button
-    const $messageText = $('#messageText'); // Textarea for post content
-    const $photoUpload = $('#photoUpload'); // File input for image upload
-
-    // Function to check if the form has data
-    function checkFormData() {
-        const messageText = $messageText.val() || '';
-        const hasText = messageText.trim() !== '';
-        const hasImage = $photoUpload[0].files.length > 0;
-        $postButton.prop('disabled', !(hasText || hasImage));
+    function togglePostButton() {
+        const content = $('#postContent').val().trim();
+        const hasImage = $('#photo-upload')[0].files.length > 0;
+        $('#submitPost').prop('disabled', !hasImage);
     }
 
-    // Monitor changes in the textarea and file input
-    $messageText.on('input', checkFormData);
-    $photoUpload.on('change', checkFormData);
+    function previewImage(event) {
+        const preview = document.getElementById('image-preview');
+        preview.innerHTML = "";
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const imgContainer = document.createElement('div');
+                imgContainer.classList.add('position-relative', 'd-inline-block');
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.classList.add('img-fluid', 'mt-2');
+                img.style.aspectRatio = "1 / 1";
+                img.style.width = "100%";
+                img.style.objectFit = "cover";
+                const closeIcon = document.createElement('i');
+                closeIcon.className = 'fa-solid fa-circle-xmark position-absolute top-0 end-0 text-danger fs-4 m-1';
+                closeIcon.style.cursor = "pointer";
+                closeIcon.onclick = function () {
+                    preview.innerHTML = "";
+                    $('#photo-upload').val('');
+                    togglePostButton();
+                };
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(closeIcon);
+                preview.appendChild(imgContainer);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
 
-    // Initial check
-    checkFormData();
+    $('#postContent, #photo-upload').on('input change', togglePostButton);
 
-    // Form submission handler
-    $('#postForm').submit(function (e) {
-        e.preventDefault();
-        var formData = new FormData(this);
-        var messageText = $messageText.val() || '';
-        formData.append('postContent', messageText.trim());
-        var imageFile = $photoUpload[0].files[0];
-        if (imageFile) formData.append('imageFile', imageFile);
+    $('#submitPost').on('click', function () {
+        const formData = new FormData();
+        formData.append('postContent', $('#postContent').val());
+        formData.append('imageFile', $('#photo-upload')[0].files[0]);
+        formData.append('__RequestVerificationToken', $('[name="__RequestVerificationToken"]').val());
 
         $.ajax({
             url: '/UploadPost/UploadPost',
             type: 'POST',
             data: formData,
-            headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
-            contentType: false,
             processData: false,
+            contentType: false,
             success: function (response) {
                 if (response.success) {
                     showToast('Post uploaded successfully!', 'success');
                     $('#postForm')[0].reset();
-                    $('#image-preview').html('');
-                    $('#postModal').modal('hide');
+                    $('#image-preview').html("");
+                    togglePostButton();
                     setTimeout(() => location.reload(), 1500);
                 } else {
                     showToast('Post uploading failed!', 'error');
                 }
             },
             error: function (xhr, status, error) {
-                showToast('Error: ' + xhr.responseText, 'error');
+                alert('Error: ' + error);
             }
         });
     });
 
-    // Function to show toast notifications
     function showToast(message, type) {
         const toastContainer = $('#toastContainer');
         const toast = $(`

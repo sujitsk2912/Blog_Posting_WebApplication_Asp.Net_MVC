@@ -251,6 +251,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Css\Styles.css" />
     <Content Include="Assets\Images\img1.png" />
     <Content Include="Assets\Images\img2.png" />
     <Content Include="Assets\Images\img3.png" />
@@ -275,12 +276,18 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\AjaxScipts\fetchPosts.js" />
+    <Content Include="Scripts\AjaxScipts\main.js" />
+    <Content Include="Scripts\AjaxScipts\commentActions.js" />
+    <Content Include="Scripts\AjaxScipts\timeFormatting.js" />
+    <Content Include="Scripts\AjaxScipts\loadComments.js" />
+    <Content Include="Scripts\AjaxScipts\utils.js" />
     <Content Include="Scripts\AjaxScipts\adjustTextareaHeight.js" />
     <Content Include="Scripts\AjaxScipts\uploadComments.js" />
     <Content Include="Scripts\AjaxScipts\postActions.js" />
     <Content Include="Scripts\AjaxScipts\imagePreview.js" />
     <Content Include="Scripts\AjaxScipts\uploadPost.js" />
-    <Content Include="Scripts\AjaxScipts\getPosts.js" />
+    <Content Include="Scripts\AjaxScipts\posts.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />

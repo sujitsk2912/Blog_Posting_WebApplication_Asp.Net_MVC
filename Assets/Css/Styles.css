@@ -1,0 +1,61 @@
+﻿/* styles.css */
+.container #postContent {
+    min-height: 30px;
+    max-height: 400px;
+    height: auto;
+    overflow-y: auto;
+    resize: none;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    outline: none;
+    font-size: 16px;
+    overflow: auto;
+}
+
+textarea:focus {
+    box-shadow: none !important;
+    outline: none;
+}
+
+textarea {
+    resize: none !important;
+}
+
+.container #postCommentBox {
+    min-height: 10px;
+    max-height: 400px;
+    height: auto;
+    overflow-y: auto;
+    resize: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    outline: none;
+    font-size: 16px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+textarea::placeholder {
+    color: gray !important;
+}
+
+#postContent {
+    color: #fff !important;
+}
+
+    #postContent::placeholder {
+        color: grey !important;
+    }
+
+.modal-body {
+    scroll-behavior: smooth;
+}
+
+img {
+    pointer-events: auto;
+    -webkit-user-drag: none;
+    user-drag: none;
+}

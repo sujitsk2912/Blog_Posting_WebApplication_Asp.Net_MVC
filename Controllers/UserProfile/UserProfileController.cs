@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Text.Json;
 using System.Web.Mvc;
 
 namespace Blog_Posting_WebApplication.Controllers.UserProfile
@@ -14,12 +15,16 @@ namespace Blog_Posting_WebApplication.Controllers.UserProfile
         [HttpGet]
         public ActionResult ShowUserProfile(int userId)
         {
+
             try
             {
+
                 var userProfile = GetUserProfile(userId);
 
                 if (userProfile != null)
                 {
+                    var posts = GetPosts(userId);
+                    ViewBag.Posts = JsonSerializer.Serialize(posts);
                     return View(userProfile);
                 }
                 else
@@ -32,6 +37,55 @@ namespace Blog_Posting_WebApplication.Controllers.UserProfile
             {
                 ViewBag.ErrorMessage = "Error: " + ex.Message;
                 return View();
+            }
+        }
+
+        [HttpGet]
+        //[AllowAnonymous] // Allow anonymous access to this action
+        public JsonResult GetPosts(int userId)
+        {
+            try
+            {
+                List<object> posts = new List<object>();
+
+                conn.Open();
+                SqlCommand cmdGetPosts = new SqlCommand("usp_GetPostsByUserID", conn);
+
+                cmdGetPosts.CommandType = CommandType.StoredProcedure;
+                cmdGetPosts.Parameters.AddWithValue("@UserID", userId);
+                SqlDataReader reader = cmdGetPosts.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    // Convert binary image data to base64 string (if it exists)
+                    byte[] postImageData = reader["PostImageURL"] as byte[];
+                    string postImageBase64 = postImageData != null ? Convert.ToBase64String(postImageData) : null;
+
+                    byte[] userImageData = reader["UserImageURL"] as byte[];
+                    string userImageBase64 = userImageData != null ? Convert.ToBase64String(userImageData) : null;
+
+                    posts.Add(new
+                    {
+                        PostID = reader["PostID"],
+                        UserID = reader["UserID"],
+                        FirstName = reader["FirstName"],
+                        LastName = reader["LastName"],
+                        PostedOn = Convert.ToDateTime(reader["PostedOn"]).ToString("yyyy-MM-ddTHH:mm:ss"),
+                        PostContent = reader["PostContent"] == DBNull.Value ? null : reader["PostContent"],
+                        PostImageURL = postImageBase64 != null ? $"data:image/jpeg;base64,{postImageBase64}" : null, // Base64 image string
+                        UserImageURL = userImageBase64 != null ? $"data:image/jpeg;base64,{userImageBase64}" : null // Base64 image string
+                    });
+                }
+                return Json(posts, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error in GetPosts: " + ex.ToString());
+                return Json(new { success = false, error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+            finally
+            {
+                conn.Close();
             }
         }
 
@@ -126,7 +180,6 @@ namespace Blog_Posting_WebApplication.Controllers.UserProfile
         }
 
 
-
         [HttpPost]
         public JsonResult GetUsersByUsername(string searchTerm)
         {
@@ -177,5 +230,8 @@ namespace Blog_Posting_WebApplication.Controllers.UserProfile
                 }
             }
         }
+
+     
+
     }
 }

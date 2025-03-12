@@ -3,6 +3,7 @@
 }
 
 
+
 <style>
     body {
         background-color: #000 !important;
@@ -31,44 +32,47 @@
     .profile-info {
         flex-grow: 1;
     }
+
         .profile-info div button {
             background-color: #363636;
-            display:flex; 
-            align-items:center; 
+            display: flex;
+            align-items: center;
             height: 32px;
-            border:none;
-            outline:none;
+            border: none;
+            outline: none;
             border-radius: 8px;
             margin: 0;
             cursor: pointer;
             padding: 10px 16px;
-            text-align: center ;
+            text-align: center;
         }
+
         .profile-info button a {
-            font-size: .875rem; 
-            padding:0;
-            margin: 0; 
-            text-align: center; 
+            font-size: .875rem;
+            padding: 0;
+            margin: 0;
+            text-align: center;
             text-decoration: none;
             font-weight: 500;
             color: #fff;
         }
 
         .profile-info .info1 {
-            display: flex; 
-            min-width: 0; 
+            display: flex;
+            min-width: 0;
             gap: 30px;
             flex-shrink: 1;
-            margin-bottom: 20px; 
-            word-wrap: break-word; 
+            margin-bottom: 20px;
+            word-wrap: break-word;
             white-space: nowrap;
         }
 
         .profile-info small {
             font-size: 16px;
-            color:gray;
+            color: gray;
             font-weight: 400 !important;
         }
+
     .stats {
         display: flex;
         gap: 20px;
@@ -83,7 +87,7 @@
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 10px;
         padding: 20px;
-        place-items:center;
+        place-items: center;
     }
 
     .post-item {
@@ -136,45 +140,47 @@
         word-break: break-word;
     }
 
-            .stats {
-           margin:30px 0;
-        }
-    .stats ul {
-        list-style-type: none;
-        margin: 0px;
-        padding: 0px;
-        display: flex;
-        flex-direction: row;
-/*        margin-bottom: 20px;*/
+    .stats {
+        margin: 30px 0;
     }
 
-        .stats ul li {
-            margin-right: 40px;
+        .stats ul {
+            list-style-type: none;
+            margin: 0px;
+            padding: 0px;
             display: flex;
-            gap: 5px;
-            font-size:18px !important;
-            text-shadow: none !important;
-            font-size: 1.10rem !important;
+            flex-direction: row;
+            /*        margin-bottom: 20px;*/
         }
 
-    .bio div p {
-        font-size: 14px; 
-        font-weight: 400;
-        margin: 0; 
-        line-height: 18px; 
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
-            .stats ul > li > h5 {
+            .stats ul li {
+                margin-right: 40px;
+                display: flex;
+                gap: 5px;
                 font-size: 18px !important;
-                margin:0 !important;
+                text-shadow: none !important;
+                font-size: 1.10rem !important;
             }
 
-                .stats span {
-                    font-size: 16px !important;
-                    color: #a8a8a8;
-                    text-shadow: none !important;
-                    margin-top: -1px;
-                }
+    .bio div span {
+        font-size: 14px;
+        font-weight: 400;
+        margin: 0;
+        line-height: 18px;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .stats ul > li > h5 {
+        font-size: 18px !important;
+        margin: 0 !important;
+    }
+
+    .stats span {
+        font-size: 16px !important;
+        color: #a8a8a8;
+        text-shadow: none !important;
+        margin-top: -1px;
+    }
 
     .nav-link {
         border: none !important;
@@ -189,12 +195,15 @@
         background-color: transparent !important;
         border-color: none !important;
     }
-    .nav-link:focus, .nav-link:hover{
-/*        color:#fff !important;*/
+
+    .nav-link:focus, .nav-link:hover {
+        /*        color:#fff !important;*/
     }
+
     .modal-dialog {
         max-width: 500px !important;
     }
+
     .nav-tabs {
         border: none !important;
         place-content: center;
@@ -204,6 +213,7 @@
     .nav-item {
         margin-left: 40px;
     }
+
     .nav-tabs a {
         color: #a8a8a8;
         text-transform: uppercase;
@@ -220,10 +230,18 @@
     button:hover {
         background-color: #262626 !important;
     }
+
+    img {
+        pointer-events: auto; /* Keep click enabled */
+        -webkit-user-drag: none; /* Disable drag in Safari/Chrome */
+        user-drag: none; /* Standard for modern browsers */
+    }
 </style>
 
 
 <main>
+
+
 
     <div class="container" style="min-height:80vh;">
 
@@ -255,7 +273,7 @@
                     <div class="modal-header">
                         <h5 class="" id="changePhotoModalLabel">Change Profile Photo</h5>
                     </div>
-                    <div class="modal-body" id="changePhotoModalContent" >
+                    <div class="modal-body" id="changePhotoModalContent">
                         <button type="button" class="text-primary">Upload Photo</button>
                         <button type="button" class="text-danger">Remove Current Photo</button>
                         <button type="button" data-bs-dismiss="modal" aria-label="Close" class="text-secondary">Cancel</button>
@@ -265,24 +283,23 @@
         </div>
 
         <!--end change photo model -->
-
         <!-- Profile Header -->
         <section class="profile-header">
-            <img  data-bs-toggle="modal" data-bs-target="#changePhotoModal" id="profileImage" style="cursor:pointer" src="https://picsum.photos/120/120?random=1" alt="Profile Image" class="profile-image">
+            <img data-bs-toggle="modal" data-bs-target="#changePhotoModal" id="profileImage" style="cursor:pointer" src="https://picsum.photos/120/120?random=1" alt="Profile Image" class="profile-image">
             <div class="profile-info">
                 <div class="info1">
                     <div class="" style=" padding-top: 30px; ">
                         <h4 id="fullName" class="fw-semibold m-0">Loading...</h4>
-                        <small id="username" class="" >Loading...</small>
+                        <small id="username" class="">Loading...</small>
                     </div>
                     <div style="display: flex; gap: 10px; align-items: center;">
-                        <button class="" id="btneditProfile" >
+                        <button class="" id="btneditProfile">
                             <a href="#">Edit Profile</a>
                         </button>
-                        <button class="" id="btnFollow" >
+                        <button class="" id="btnFollow">
                             <a href="#">Following</a>
                         </button>
-                        <button class="" id="btnMessage" >
+                        <button class="" id="btnMessage">
                             <a href="#">Message</a>
                         </button>
                         <span>
@@ -312,13 +329,13 @@
                     </ul>
                 </section>
 
-                <section class="bio" style="max-width: 500px; margin:15px 0">
-                    <div style="width: 100%; word-wrap: break-word;">
-                        <p >
+                <section class="bio" style="max-width: 500px; margin: 15px 0; grid-column-start: 2; overflow-y: hidden; grid-row-start: 3; overflow-x: hidden; line-height: 18px; font-size: 14px;">
+                    <div style="width: 100%; word-wrap: break-word;vertical-align: baseline; align-items: start;">
+                        <span style=" display: inline !important; margin: 0 !important;">
                             _______________________________________________________
                             - 𝙓𝙓𝙄𝙓•𝙓𝙄𝙄 ✨
                             - 𝙏𝙝𝙞𝙣𝙜𝙨 𝙚𝙣𝙙 𝙩𝙤 𝙗𝙚𝙜𝙞𝙣 𝙖𝙜𝙖𝙞𝙣.🍁
-                        </p>
+                        </span>
                     </div>
                 </section>
 
@@ -340,26 +357,16 @@
                     </li>
                 </ul>
             </div>
-            <div class="posts-grid">
-                <div class="post-item">
-                    <img src="https://picsum.photos/300/300?random=2" alt="Post 1">
-                </div>
-                <div class="post-item">
-                    <img src="https://picsum.photos/300/300?random=3" alt="Post 2">
-                </div>
-                <div class="post-item">
-                    <img src="https://picsum.photos/300/300?random=4" alt="Post 3">
-                </div>
-                <div class="post-item">
-                    <img src="https://picsum.photos/300/300?random=5" alt="Post 4">
-                </div>
-                <div class="post-item">
-                    <img src="https://picsum.photos/300/300?random=6" alt="Post 5">
-                </div>
-                <div class="post-item">
-                    <img src="https://picsum.photos/300/300?random=7" alt="Post 6">
-                </div>
+
+
+            <div class="posts-grid" id="posts-container">
+                <!-- Posts will be dynamically inserted here -->
             </div>
+
+            <div style=" width: 100%; text-align: center; height: 250px; display: flex; justify-content: center; align-items: center;">
+                <p style="place-content: center;">No Posts Available</p>
+            </div>
+
         </section>
 
         <!-- Not Found Section -->
@@ -377,6 +384,9 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+
+
+
     $(document).ready(function () {
         // Get the userId from the query string
         const urlParams = new URLSearchParams(window.location.search);
@@ -423,5 +433,43 @@
         }
     });
 </script>
+
+
+
+@* Script for loading posts dynamically *@
+<script>
+    $(document).ready(function () {
+        // Parse the posts data from ViewBag
+        var posts = JSON.parse('@Html.Raw(ViewBag.Posts)');
+        var Data = posts.Data;
+
+        // Check if posts data is available
+        if (Data) {
+            var postsContainer = $('#posts-container');
+            postsContainer.empty(); // Clear any existing content
+
+            // Loop through each post and append it to the container
+            $.each(Data, function (index, item) {
+                var postHtml = `
+                    <div class="post-item" style="     display: block;
+    width: 100%;
+    position: relative;   height: fit-content;display: block;overflow: hidden;position: relative;">
+                        <img  src="${item.PostImageURL}" alt="Post Image" style="cursor:pointer;user-select: none;object-fit: cover;">
+
+                        </div>
+                `;
+                postsContainer.append(postHtml);
+            });
+        } else {
+            // Display a message if no posts are available
+            $('#posts-container').html('<p>No posts available.</p>');
+        }
+    });
+</script>
+@* End of script for loading posts dynamically *@
+
+
+
+
 
 
